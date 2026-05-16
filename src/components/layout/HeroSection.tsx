@@ -118,6 +118,16 @@ export function HeroSection() {
           </div>
         </div>
       </Container>
+
+      <div className="absolute -top-16 -right-24 rotate-12 opacity-[0.06] pointer-events-none hidden lg:block">
+        <DoodleAccent variant="star" color="#D6B347" size={420} />
+      </div>
+      <div className="absolute -bottom-20 -left-16 rotate-[-15deg] opacity-[0.05] pointer-events-none hidden lg:block">
+        <DoodleAccent variant="circle" color="#6F9D9A" size={400} />
+      </div>
+      <div className="absolute top-1/4 right-1/4 rotate-6 opacity-[0.04] pointer-events-none hidden xl:block">
+        <DoodleAccent variant="squiggle" color="#B8A7CC" size={384} />
+      </div>
     </Section>
   );
 }

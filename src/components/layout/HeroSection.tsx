@@ -77,11 +77,44 @@ export function HeroSection() {
             </span>
           </motion.div>
 
+          <motion.div
+            custom={4}
+            initial="hidden"
+            animate="visible"
+            variants={fadeUp}
+            className="mt-8 flex flex-wrap gap-2"
+          >
+            <StickerTag variant="teal" rotation={-1}>
+              TensorFlow.js
+            </StickerTag>
+            <StickerTag variant="salmon" rotation={1}>
+              Canvas API
+            </StickerTag>
+            <StickerTag variant="slime" rotation={-2}>
+              Web Audio
+            </StickerTag>
+            <StickerTag variant="lavender" rotation={0}>
+              React
+            </StickerTag>
+            <StickerTag variant="mustard" rotation={2}>
+              Next.js
+            </StickerTag>
+          </motion.div>
+
           <div className="absolute -right-4 top-8 rotate-12 sm:right-8 md:right-16">
             <DoodleAccent variant="star" color="#D6B347" size={48} />
           </div>
           <div className="absolute -left-2 bottom-0 sm:left-4">
             <DoodleAccent variant="dot-cluster" color="#6F9D9A" size={40} />
+          </div>
+          <div className="absolute left-1/3 top-4 rotate-[-8deg] hidden sm:block">
+            <DoodleAccent variant="squiggle" color="#6F9D9A" size={64} />
+          </div>
+          <div className="absolute right-12 bottom-12 rotate-6 hidden sm:block">
+            <DoodleAccent variant="arrow" color="#D98B73" size={40} />
+          </div>
+          <div className="absolute right-1/3 top-1/2 rotate-[-4deg] hidden md:block">
+            <DoodleAccent variant="circle" color="#B8A7CC" size={36} />
           </div>
         </div>
       </Container>

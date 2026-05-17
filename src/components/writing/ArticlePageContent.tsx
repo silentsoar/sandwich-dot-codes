@@ -1,6 +1,7 @@
 "use client";
 
 import { motion } from "framer-motion";
+import Image from "next/image";
 import Link from "next/link";
 import { ArrowLeft, Clock, Share2 } from "lucide-react";
 import type { Article } from "contentlayer/generated";
@@ -10,16 +11,19 @@ import { MDXRenderer } from "@/components/writing/MDXRenderer";
 import { StickerTag } from "@/components/decorative/StickerTag";
 import { CrookedDivider } from "@/components/decorative/CrookedDivider";
 import { siteConfig } from "@/lib/config";
+import { cn } from "@/lib/utils";
 
 interface ArticlePageContentProps {
   article: Article;
 }
 
 export function ArticlePageContent({ article }: ArticlePageContentProps) {
+  const hasCover = !!article.cover;
+
   return (
     <>
       <Section spacing="default">
-        <Container size="narrow">
+        <Container size={hasCover ? "default" : "narrow"}>
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
@@ -33,56 +37,74 @@ export function ArticlePageContent({ article }: ArticlePageContentProps) {
               All Writing
             </Link>
 
-            <div className="mb-4 flex flex-wrap gap-2">
-              {article.tags.map((tag, i) => {
-                const rotations = [-2, 1.5, -1, 2, -1.5];
-                return (
-                  <StickerTag key={tag} variant="teal" rotation={rotations[i % rotations.length]}>
-                    #{tag}
-                  </StickerTag>
-                );
-              })}
-            </div>
+            <div className={cn(hasCover && "flex items-start gap-8 lg:gap-12")}>
+              <div className={cn(hasCover && "min-w-0 flex-1")}>
+                <div className="mb-4 flex flex-wrap gap-2">
+                  {article.tags.map((tag, i) => {
+                    const rotations = [-2, 1.5, -1, 2, -1.5];
+                    return (
+                      <StickerTag key={tag} variant="teal" rotation={rotations[i % rotations.length]}>
+                        #{tag}
+                      </StickerTag>
+                    );
+                  })}
+                </div>
 
-            <h1 className="font-heading text-display font-black leading-[0.95] tracking-tighter rotate-[-0.2deg]">
-              {article.title}
-            </h1>
+                <h1 className="font-heading text-display font-black leading-[0.95] tracking-tighter rotate-[-0.2deg]">
+                  {article.title}
+                </h1>
 
-            <p className="mt-4 max-w-2xl text-lg text-muted rotate-[0.1deg]">
-              {article.description}
-            </p>
+                <p className="mt-4 max-w-2xl text-lg text-muted rotate-[0.1deg]">
+                  {article.description}
+                </p>
 
-            <div className="mt-6 flex items-center gap-4 text-sm text-muted">
-              <span className="font-heading font-bold">{siteConfig.author}</span>
-              <span>·</span>
-              <time dateTime={article.date} suppressHydrationWarning>
-                {new Date(article.date).toLocaleDateString("en-US", {
-                  month: "long",
-                  day: "numeric",
-                  year: "numeric",
-                })}
-              </time>
-              {article.readingTime && (
-                <span className="flex items-center gap-1">
-                  <Clock size={14} />
-                  {article.readingTime}
-                </span>
+                <div className="mt-6 flex items-center gap-4 text-sm text-muted">
+                  <span className="font-heading font-bold">{siteConfig.author}</span>
+                  <span>·</span>
+                  <time dateTime={article.date} suppressHydrationWarning>
+                    {new Date(article.date).toLocaleDateString("en-US", {
+                      month: "long",
+                      day: "numeric",
+                      year: "numeric",
+                    })}
+                  </time>
+                  {article.readingTime && (
+                    <span className="flex items-center gap-1">
+                      <Clock size={14} />
+                      {article.readingTime}
+                    </span>
+                  )}
+                  <button
+                    onClick={() => {
+                      if (typeof navigator !== "undefined" && navigator.share) {
+                        navigator.share({
+                          title: article.title,
+                          url: window.location.href,
+                        });
+                      }
+                    }}
+                    className="flex items-center gap-1 transition-colors hover:text-foreground"
+                    aria-label="Share article"
+                  >
+                    <Share2 size={14} />
+                    Share
+                  </button>
+                </div>
+              </div>
+
+              {hasCover && (
+                <div className="hidden flex-shrink-0 md:block md:w-[260px] lg:w-[300px]">
+                  <div className="border-3 border-border shadow-tactile rotate-[1deg] overflow-hidden">
+                    <Image
+                      src={article.cover!}
+                      alt={article.title}
+                      width={600}
+                      height={400}
+                      className="h-auto w-full object-cover"
+                    />
+                  </div>
+                </div>
               )}
-              <button
-                onClick={() => {
-                  if (typeof navigator !== "undefined" && navigator.share) {
-                    navigator.share({
-                      title: article.title,
-                      url: window.location.href,
-                    });
-                  }
-                }}
-                className="flex items-center gap-1 transition-colors hover:text-foreground"
-                aria-label="Share article"
-              >
-                <Share2 size={14} />
-                Share
-              </button>
             </div>
           </motion.div>
         </Container>

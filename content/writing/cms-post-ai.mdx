@@ -1,0 +1,116 @@
+---
+title: "What's the Role of Content Management Post-AI?"
+description: "Agentic AI tools can edit content directly. Does that mean CMSs are doomed, or do they need to evolve into something stranger?"
+date: "2026-05-18"
+tags: ["CMS", "AI", "content", "architecture", "agentic"]
+featured: true
+---
+
+Last month I watched an AI agent rewrite an entire marketing site in twelve minutes. It pulled the product docs, rewrote the copy for a different audience, adjusted the tone, swapped the screenshots, and opened a pull request. No CMS was involved. No admin panel. No drag-and-drop editor. Just a language model with file access and a clear brief.
+
+If content can be authored, edited, and published by AI agents that operate directly on codebases and file systems, what exactly is the point of a Content Management System?
+
+## The CMS Was Born from a Constraint
+
+Traditional CMSs exist because non-technical people needed a way to publish content on the web without touching code. WordPress, Drupal, Contentful, Sanity — they all solve the same fundamental problem: **the gap between "I have something to say" and "I need it to appear on a URL."**
+
+That gap is closing fast. Agentic AI tools like Cursor, Windsurf, and Devin can already:
+
+- Read a brief and produce structured content
+- Edit MDX, Markdown, and HTML files directly
+- Open pull requests with proposed changes
+- Respond to natural language instructions like "make the tone more casual" or "add a section about pricing"
+
+When the interface for content editing is a conversation with an AI that understands your codebase, the admin panel starts to feel like a middleman.
+
+## Will CMSs Disappear Entirely?
+
+No. But the ones that survive will look radically different.
+
+Here's why the CMS won't die: **content doesn't exist in a vacuum.** A blog post isn't just words — it's words plus metadata, plus relationships to other content, plus scheduling, plus permissions, plus analytics, plus compliance, plus version history, plus multi-platform distribution. AI agents are getting good at the "words" part. They're still terrible at the orchestration layer.
+
+The CMS of the future won't be a place where you write content. It'll be a place where content is **governed, orchestrated, and understood.**
+
+## Five Features the Post-AI CMS Needs
+
+If I were building a CMS today designed to survive the agentic era, here's what I'd prioritise:
+
+### 1. Content Contracts
+
+Every piece of content needs a machine-readable schema that defines its structure, required fields, validation rules, and relationships. Not just "title + body" — but "this product page must have a hero image between 1200×638 and 1200×800 pixels, at least three feature blocks, and a CTA that links to a valid pricing page."
+
+AI agents need these contracts to produce valid content. Without them, an agent can write beautiful prose that completely breaks your layout because it forgot the thumbnail image.
+
+Think of it like TypeScript for content. The CMS becomes the compiler that catches structural errors before they reach production.
+
+### 2. Diff-Based Editorial Workflows
+
+When an AI agent proposes a change, a human needs to review it. Not in a WYSIWYG editor — in a diff viewer. The CMS should show exactly what changed, what the implications are (SEO impact, broken links, affected translations), and let the editor approve, reject, or modify with surgical precision.
+
+This is already how developers review code. Content review should work the same way. The CMS becomes a **merge tool for editorial decisions.**
+
+### 3. Semantic Versioning for Content
+
+Content needs proper version control — not the "revision history" that most CMSs offer, where you get a list of timestamps and can restore an old version. Real semantic versioning:
+
+- **Patch**: typo fixes, metadata updates
+- **Minor**: new sections, updated facts, tone adjustments
+- **Major**: complete rewrites, structural changes, audience shifts
+
+AI agents should be able to propose a version bump type, and the CMS should enforce it. This lets you reason about content stability: "this landing page hasn't had a major revision in six months" is a useful signal.
+
+### 4. Context Feeds for Agents
+
+AI agents need context to write good content. The CMS should be able to generate structured "context feeds" — JSON or YAML bundles that describe:
+
+- The existing content landscape (what's already published, what's performing well)
+- Brand voice guidelines (not as a PDF, but as structured rules)
+- Audience data (who reads this, what they care about)
+- Competitive intelligence (what similar sites are publishing)
+
+Instead of the agent reading your entire codebase to understand context, the CMS pre-packages it. The agent gets a focused briefing document. The CMS becomes a **context broker** between humans and AI.
+
+### 5. Content Observability
+
+Most CMSs tell you what content exists. Almost none tell you how it's performing, whether it's consistent with the rest of the site, or when it's gone stale.
+
+The post-AI CMS needs:
+
+- **Drift detection**: "Your pricing page and your product page describe features differently."
+- **Freshness scoring**: "This technical article references APIs that were deprecated last quarter."
+- **Consistency checks**: "Three different pages use three different terms for the same concept."
+- **Performance correlation**: "Pages with this content structure have 40% higher bounce rates."
+
+AI agents can generate content at scale. The CMS needs to make sure that content doesn't silently rot.
+
+## The Real Shift
+
+The fundamental shift isn't "AI replaces the CMS." It's **the CMS stops being an authoring tool and becomes an orchestration platform.**
+
+In the same way that GitHub isn't where you write code (your IDE is), the post-AI CMS isn't where you write content (your AI agent is). It's where content is:
+
+- Validated against contracts
+- Reviewed through diffs
+- Versioned semantically
+- Distributed across platforms
+- Monitored for quality and consistency
+
+The writing moves to the edges. The governance stays in the centre.
+
+## What This Means for Developers
+
+If you're building content-heavy sites today, here's my advice:
+
+**Use file-based content.** MDX, Markdown, JSON — formats that live in your repo and are version-controlled alongside your code. This is already the native format for AI agents. Any CMS that locks content into a proprietary database is adding friction to the agentic workflow.
+
+**Define your content schemas rigorously.** Zod schemas, TypeScript types, JSON Schema — whatever you prefer. Make the structure explicit. This is what lets AI agents produce valid content without human intervention.
+
+**Invest in the review layer.** The bottleneck in AI-generated content isn't generation — it's review. Build or adopt tools that let humans quickly evaluate AI proposals. Diffs, previews, impact analysis.
+
+**Don't over-index on the authoring experience.** The CMS that wins the post-AI era won't have the best WYSIWYG editor. It'll have the best governance, observability, and agent integration.
+
+## The Sandwich Verdict
+
+Will CMSs disappear? No. But the WordPress-style "log in and write a blog post" workflow is on borrowed time. The CMS that remains will be less like a word processor and more like an air traffic control system: coordinating, validating, and monitoring content that's primarily authored by machines, governed by contracts, and reviewed by humans.
+
+The content isn't going away. The editing interface is just becoming a conversation.

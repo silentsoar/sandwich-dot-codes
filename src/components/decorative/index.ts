@@ -6,3 +6,4 @@ export { TapeFrame } from "./TapeFrame";
 export { StickerTag } from "./StickerTag";
 export { DoodleAccent } from "./DoodleAccent";
 export { ScribbleArrow } from "./ScribbleArrow";
+export { PhoneShowcase } from "./PhoneShowcase";

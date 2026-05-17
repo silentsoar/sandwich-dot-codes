@@ -23,6 +23,7 @@ export const Project = defineDocumentType(() => ({
       required: true,
     },
     cover: { type: "string", required: true },
+    showcase: { type: "string" },
     tech: { type: "list", of: { type: "string" }, required: true },
   },
   computedFields: {

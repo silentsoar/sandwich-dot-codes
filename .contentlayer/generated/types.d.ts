@@ -58,6 +58,7 @@ export type Project = {
   demo?: string | undefined
   status: 'active' | 'experimental' | 'archived'
   cover: string
+  showcase?: string | undefined
   tech: string[]
   /** MDX file body */
   body: MDX

@@ -10,6 +10,7 @@ import { MDXRenderer } from "@/components/writing/MDXRenderer";
 import { StickerTag } from "@/components/decorative/StickerTag";
 import { DoodleAccent } from "@/components/decorative/DoodleAccent";
 import { CrookedDivider } from "@/components/decorative/CrookedDivider";
+import { PhoneShowcase } from "@/components/decorative/PhoneShowcase";
 
 interface ProjectPageContentProps {
   project: Project;
@@ -98,6 +99,17 @@ export function ProjectPageContent({ project }: ProjectPageContentProps) {
           </motion.div>
         </Container>
       </Section>
+
+      {project.showcase && (
+        <Section spacing="tight">
+          <Container size="default">
+            <PhoneShowcase
+              src={project.showcase}
+              alt={`${project.title} on iPhone`}
+            />
+          </Container>
+        </Section>
+      )}
 
       <CrookedDivider variant="scribble" className="my-4" />
 

@@ -24,18 +24,18 @@
       ]
     },
     {
-      "id": "parked",
-      "title": "Parked",
-      "cards": [
-        { "id": "card-6", "text": "Command palette with cmdk" }
-      ]
-    },
-    {
       "id": "done",
       "title": "Done",
       "cards": [
         { "id": "card-7", "text": "GitHub activity timeline" },
         { "id": "card-8", "text": "SVG sandwich favicon" }
+      ]
+    },
+    {
+      "id": "parked",
+      "title": "Parked",
+      "cards": [
+        { "id": "card-6", "text": "Command palette with cmdk" }
       ]
     }
   ]

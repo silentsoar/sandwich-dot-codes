@@ -9,6 +9,7 @@ import { Section } from "@/components/layout/Section";
 import { MDXRenderer } from "@/components/writing/MDXRenderer";
 import { StickerTag } from "@/components/decorative/StickerTag";
 import { CrookedDivider } from "@/components/decorative/CrookedDivider";
+import { siteConfig } from "@/lib/config";
 
 interface ArticlePageContentProps {
   article: Article;
@@ -49,6 +50,8 @@ export function ArticlePageContent({ article }: ArticlePageContentProps) {
             </p>
 
             <div className="mt-6 flex items-center gap-4 text-sm text-muted">
+              <span className="font-heading font-bold">{siteConfig.author}</span>
+              <span>·</span>
               <time dateTime={article.date}>
                 {new Date(article.date).toLocaleDateString("en-US", {
                   month: "long",

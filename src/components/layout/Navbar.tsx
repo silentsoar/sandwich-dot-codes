@@ -44,9 +44,14 @@ export function Navbar() {
         <nav className="flex h-16 items-center justify-between gap-4">
           <Link
             href="/"
-            className="shrink-0 font-heading text-xl font-black tracking-tight transition-transform hover:rotate-[-1deg] hover:scale-105"
+            className="shrink-0 transition-transform hover:rotate-[-1deg] hover:scale-105"
           >
-            {siteConfig.name}
+            <span className="font-heading text-xl font-black tracking-tight">
+              {siteConfig.name}
+            </span>
+            <span className="ml-2 font-heading text-xs text-muted">
+              by {siteConfig.author}
+            </span>
           </Link>
 
           <ul className="hidden items-center gap-1 md:flex">

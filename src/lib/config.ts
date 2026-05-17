@@ -2,6 +2,7 @@ import type { NavItem, SiteConfig } from "@/types";
 
 export const siteConfig: SiteConfig = {
   name: "Sandwich Codes",
+  author: "Dylan Gibbs",
   description: "AI project portfolio and editorial website showcasing web experiments and GitHub-hosted applications.",
   url: "https://sandwich.codes",
   ogImage: "/og.png",

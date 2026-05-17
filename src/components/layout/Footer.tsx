@@ -13,6 +13,9 @@ export function Footer() {
             <p className="mt-2 max-w-xs text-sm text-background/70">
               {siteConfig.description}
             </p>
+            <p className="mt-2 text-xs text-background/50">
+              By {siteConfig.author}
+            </p>
           </div>
 
           <div className="rotate-[0.3deg]">

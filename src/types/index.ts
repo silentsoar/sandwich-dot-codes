@@ -40,6 +40,7 @@ export type NavItem = {
 
 export type SiteConfig = {
   name: string;
+  author: string;
   description: string;
   url: string;
   ogImage: string;

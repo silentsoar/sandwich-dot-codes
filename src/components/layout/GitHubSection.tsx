@@ -1,11 +1,8 @@
-import { fetchGitHubRepos, fetchRecentCommits } from "@/lib/github";
+import { fetchGitHubTimeline } from "@/lib/github";
 import { GitHubSectionClient } from "./GitHubSectionClient";
 
 export async function GitHubSection() {
-  const [repos, commits] = await Promise.all([
-    fetchGitHubRepos(),
-    fetchRecentCommits(),
-  ]);
+  const timeline = await fetchGitHubTimeline();
 
-  return <GitHubSectionClient repos={repos} commits={commits} />;
+  return <GitHubSectionClient initialTimeline={timeline} />;
 }

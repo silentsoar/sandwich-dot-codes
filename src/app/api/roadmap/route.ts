@@ -1,7 +1,10 @@
 import { NextResponse } from "next/server";
 import { isValidAuth } from "../auth/route";
+import { Redis } from "@upstash/redis";
 
 export const revalidate = 0;
+
+const STORAGE_KEY = "roadmap:board";
 
 interface KanbanCard {
   id: string;
@@ -18,22 +21,32 @@ interface KanbanBoard {
   columns: KanbanColumn[];
 }
 
-const GITHUB_OWNER = "silentsoar";
-const GITHUB_REPO = "sandwich-dot-codes";
-const FILE_PATH = "content/roadmap.json";
-
-const githubHeaders = {
-  Accept: "application/vnd.github.v3+json",
-  ...(process.env.GITHUB_TOKEN && {
-    Authorization: `Bearer ${process.env.GITHUB_TOKEN}`,
-  }),
-};
+function getRedis(): Redis | null {
+  try {
+    return new Redis({
+      url: process.env.KV_REST_API_URL ?? process.env.UPSTASH_REDIS_REST_URL ?? "",
+      token: process.env.KV_REST_API_TOKEN ?? process.env.UPSTASH_REDIS_REST_TOKEN ?? "",
+    });
+  } catch {
+    return null;
+  }
+}
 
 async function readBoard(): Promise<KanbanBoard> {
+  const redis = getRedis();
+  if (redis) {
+    try {
+      const data = await redis.get<KanbanBoard>(STORAGE_KEY);
+      if (data?.columns) return data;
+    } catch {
+      // fall through to file
+    }
+  }
+
   try {
     const fs = await import("fs");
     const path = await import("path");
-    const filePath = path.join(process.cwd(), FILE_PATH);
+    const filePath = path.join(process.cwd(), "content", "roadmap.json");
     const raw = fs.readFileSync(filePath, "utf-8");
     return JSON.parse(raw);
   } catch {
@@ -41,60 +54,17 @@ async function readBoard(): Promise<KanbanBoard> {
   }
 }
 
-async function getFileSha(): Promise<string | null> {
-  if (!process.env.GITHUB_TOKEN) return null;
-
-  try {
-    const res = await fetch(
-      `https://api.github.com/repos/${GITHUB_OWNER}/${GITHUB_REPO}/contents/${FILE_PATH}`,
-      { headers: githubHeaders, next: { revalidate: 0 } },
-    );
-    if (!res.ok) return null;
-    const data = await res.json();
-    return data.sha;
-  } catch {
-    return null;
-  }
-}
-
 async function writeBoard(board: KanbanBoard): Promise<{ success: boolean; error?: string }> {
-  const token = process.env.GITHUB_TOKEN;
-  if (!token) {
-    return { success: false, error: "No GITHUB_TOKEN configured — changes are session-only" };
+  const redis = getRedis();
+  if (!redis) {
+    return { success: false, error: "No Redis configured — set KV_REST_API_URL and KV_REST_API_TOKEN" };
   }
-
-  const sha = await getFileSha();
-  if (!sha) {
-    return { success: false, error: "Could not read current file from GitHub" };
-  }
-
-  const content = Buffer.from(JSON.stringify(board, null, 2) + "\n").toString("base64");
 
   try {
-    const res = await fetch(
-      `https://api.github.com/repos/${GITHUB_OWNER}/${GITHUB_REPO}/contents/${FILE_PATH}`,
-      {
-        method: "PUT",
-        headers: {
-          ...githubHeaders,
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({
-          message: "Update roadmap board",
-          content,
-          sha,
-        }),
-      },
-    );
-
-    if (!res.ok) {
-      const err = await res.json().catch(() => ({}));
-      return { success: false, error: err.message || `GitHub API ${res.status}` };
-    }
-
+    await redis.set(STORAGE_KEY, board);
     return { success: true };
   } catch {
-    return { success: false, error: "Failed to reach GitHub API" };
+    return { success: false, error: "Failed to write to Redis" };
   }
 }
 

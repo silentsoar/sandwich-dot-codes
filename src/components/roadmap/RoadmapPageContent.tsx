@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import { motion } from "framer-motion";
 import { Container } from "@/components/layout/Container";
 import { Section } from "@/components/layout/Section";
@@ -25,21 +25,6 @@ interface RoadmapPageContentProps {
 
 export function RoadmapPageContent({ initialBoard, initialAuth }: RoadmapPageContentProps) {
   const [isAuthenticated, setIsAuthenticated] = useState(initialAuth);
-  const [board, setBoard] = useState<KanbanBoardData>(initialBoard);
-  const [isLoading, setIsLoading] = useState(false);
-
-  useEffect(() => {
-    if (isAuthenticated && !isLoading) {
-      setIsLoading(true);
-      fetch("/api/roadmap")
-        .then((res) => res.json())
-        .then((data) => {
-          if (data.columns) setBoard(data);
-        })
-        .catch(() => {})
-        .finally(() => setIsLoading(false));
-    }
-  }, [isAuthenticated]);
 
   return (
     <Section spacing="loose">
@@ -81,7 +66,7 @@ export function RoadmapPageContent({ initialBoard, initialAuth }: RoadmapPageCon
         </div>
 
         <KanbanBoard
-          initialBoard={board}
+          initialBoard={initialBoard}
           isAuthenticated={isAuthenticated}
         />
       </Container>

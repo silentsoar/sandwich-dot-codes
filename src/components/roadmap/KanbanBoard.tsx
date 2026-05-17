@@ -1,7 +1,6 @@
 "use client";
 
-import { useState, useCallback } from "react";
-import { motion } from "framer-motion";
+import { useState } from "react";
 import { DoodleAccent } from "@/components/decorative/DoodleAccent";
 import { KanbanColumn, type ColumnConfig } from "./KanbanColumn";
 import type { KanbanCardData } from "./KanbanCard";
@@ -73,38 +72,42 @@ export function KanbanBoard({ initialBoard, isAuthenticated }: KanbanBoardProps)
   const [saveStatus, setSaveStatus] = useState<"idle" | "saving" | "saved" | "error">("idle");
   const [saveMessage, setSaveMessage] = useState("");
 
-  const persistBoard = useCallback(async (newBoard: KanbanBoardData) => {
+  function persistBoard(newBoard: KanbanBoardData) {
     if (!isAuthenticated) return;
 
     setSaveStatus("saving");
-    try {
-      const res = await fetch("/api/roadmap", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(newBoard),
-      });
-      const data = await res.json();
-
-      if (data.success) {
-        setSaveStatus("saved");
-        setSaveMessage("Saved");
-      } else {
+    fetch("/api/roadmap", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(newBoard),
+    })
+      .then((res) => res.json())
+      .then((data) => {
+        setSaveStatus(data.success ? "saved" : "error");
+        setSaveMessage(data.success ? "Saved" : data.error || "Save failed");
+      })
+      .catch(() => {
         setSaveStatus("error");
-        setSaveMessage(data.error || "Save failed — changes are session-only");
-      }
-    } catch {
-      setSaveStatus("error");
-      setSaveMessage("Network error — changes are session-only");
-    }
+        setSaveMessage("Network error");
+      })
+      .finally(() => {
+        setTimeout(() => {
+          setSaveStatus("idle");
+          setSaveMessage("");
+        }, 2000);
+      });
+  }
 
-    setTimeout(() => {
-      setSaveStatus("idle");
-      setSaveMessage("");
-    }, 3000);
-  }, [isAuthenticated]);
+  function updateBoard(fn: (prev: KanbanBoardData) => KanbanBoardData) {
+    setBoard((prev) => {
+      const next = fn(prev);
+      persistBoard(next);
+      return next;
+    });
+  }
 
   function moveCard(cardId: string, fromColumnId: string, toColumnId: string, toIndex: number) {
-    setBoard((prev) => {
+    updateBoard((prev) => {
       const newBoard = { ...prev, columns: prev.columns.map((c) => ({ ...c, cards: [...c.cards] })) };
 
       const fromCol = newBoard.columns.find((c) => c.id === fromColumnId);
@@ -121,41 +124,35 @@ export function KanbanBoard({ initialBoard, isAuthenticated }: KanbanBoardProps)
         : toIndex;
 
       toCol.cards.splice(adjustedIndex, 0, card);
-
-      persistBoard(newBoard);
       return newBoard;
     });
   }
 
   function addCard(columnId: string, text: string) {
-    setBoard((prev) => {
+    updateBoard((prev) => {
       const newBoard = { ...prev, columns: prev.columns.map((c) => ({ ...c, cards: [...c.cards] })) };
       const col = newBoard.columns.find((c) => c.id === columnId);
       if (!col) return prev;
 
       const id = `card-${Date.now()}-${Math.random().toString(36).slice(2, 7)}`;
       col.cards.push({ id, text });
-
-      persistBoard(newBoard);
       return newBoard;
     });
   }
 
   function deleteCard(cardId: string, columnId: string) {
-    setBoard((prev) => {
+    updateBoard((prev) => {
       const newBoard = { ...prev, columns: prev.columns.map((c) => ({ ...c, cards: [...c.cards] })) };
       const col = newBoard.columns.find((c) => c.id === columnId);
       if (!col) return prev;
 
       col.cards = col.cards.filter((c) => c.id !== cardId);
-
-      persistBoard(newBoard);
       return newBoard;
     });
   }
 
   function editCard(cardId: string, columnId: string, newText: string) {
-    setBoard((prev) => {
+    updateBoard((prev) => {
       const newBoard = { ...prev, columns: prev.columns.map((c) => ({ ...c, cards: [...c.cards] })) };
       const col = newBoard.columns.find((c) => c.id === columnId);
       if (!col) return prev;
@@ -164,8 +161,6 @@ export function KanbanBoard({ initialBoard, isAuthenticated }: KanbanBoardProps)
       if (!card) return prev;
 
       card.text = newText;
-
-      persistBoard(newBoard);
       return newBoard;
     });
   }
@@ -180,12 +175,7 @@ export function KanbanBoard({ initialBoard, isAuthenticated }: KanbanBoardProps)
       </div>
 
       {isAuthenticated && saveStatus !== "idle" && (
-        <motion.div
-          initial={{ opacity: 0, y: -8 }}
-          animate={{ opacity: 1, y: 0 }}
-          exit={{ opacity: 0 }}
-          className="mb-4 flex items-center gap-2"
-        >
+        <div className="mb-3 h-5">
           {saveStatus === "saving" && (
             <span className="font-heading text-xs font-bold text-muted">Saving...</span>
           )}
@@ -195,7 +185,7 @@ export function KanbanBoard({ initialBoard, isAuthenticated }: KanbanBoardProps)
           {saveStatus === "error" && (
             <span className="font-heading text-xs font-bold text-salmon">{saveMessage}</span>
           )}
-        </motion.div>
+        </div>
       )}
 
       <div className="flex gap-4 overflow-x-auto pb-4 scrollbar-thin">

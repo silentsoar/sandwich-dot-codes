@@ -2,7 +2,6 @@
 
 import { useState, useEffect } from "react";
 import { motion } from "framer-motion";
-import { Map } from "lucide-react";
 import { Container } from "@/components/layout/Container";
 import { Section } from "@/components/layout/Section";
 import { StickerTag } from "@/components/decorative/StickerTag";
@@ -80,19 +79,6 @@ export function RoadmapPageContent({ initialBoard, initialAuth }: RoadmapPageCon
             <DoodleAccent variant="squiggle" color="#6F9D9A" size={48} />
           </div>
         </div>
-
-        {!isAuthenticated && (
-          <motion.div
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            className="mb-6 flex items-center gap-2 rounded border-2 border-border/30 bg-mustard/10 px-4 py-2"
-          >
-            <Map size={16} className="text-muted" />
-            <span className="font-heading text-xs font-bold text-muted">
-              Log in to drag, add, edit, and delete cards.
-            </span>
-          </motion.div>
-        )}
 
         <KanbanBoard
           initialBoard={board}

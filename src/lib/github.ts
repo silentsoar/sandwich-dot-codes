@@ -200,9 +200,9 @@ export async function fetchGitHubTimeline(): Promise<TimelineEvent[]> {
       }
     }
 
-    return timeline.sort(
-      (a, b) => new Date(b.date).getTime() - new Date(a.date).getTime(),
-    );
+    return timeline
+      .sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime())
+      .slice(0, 8);
   } catch {
     return [];
   }

@@ -17,14 +17,23 @@ interface ProjectsPageContentProps {
 const allStatuses = ["all", "active", "experimental", "archived"] as const;
 
 export function ProjectsPageContent({ projects }: ProjectsPageContentProps) {
-  const [activeFilter, setActiveFilter] = useState<string>("all");
+  const [activeStatusFilter, setActiveStatusFilter] = useState<(typeof allStatuses)[number]>(
+    "all",
+  );
+  const [activeTagFilter, setActiveTagFilter] = useState("all");
 
-  const allTags = Array.from(new Set(projects.flatMap((p) => p.tags))).sort();
+  const allTags = Array.from(new Set(projects.flatMap((p) => p.tags))).sort((a, b) =>
+    a.localeCompare(b),
+  );
 
-  const filteredProjects =
-    activeFilter === "all"
-      ? projects
-      : projects.filter((p) => p.status === activeFilter);
+  const filteredProjects = projects.filter((project) => {
+    const matchesStatus = activeStatusFilter === "all" || project.status === activeStatusFilter;
+    const matchesTag = activeTagFilter === "all" || project.tags.includes(activeTagFilter);
+
+    return matchesStatus && matchesTag;
+  });
+
+  const hasActiveFilters = activeStatusFilter !== "all" || activeTagFilter !== "all";
 
   return (
     <Section spacing="loose">
@@ -54,28 +63,65 @@ export function ProjectsPageContent({ projects }: ProjectsPageContentProps) {
           initial={{ opacity: 0, y: 10 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.2, type: "spring", stiffness: 200, damping: 20 }}
-          className="mb-8 flex flex-wrap gap-2"
+          className="mb-8 space-y-4"
         >
-          {allStatuses.map((status) => (
-            <button
-              key={status}
-              onClick={() => setActiveFilter(status)}
-              className={cn(
-                "border-3 border-border px-4 py-2 font-heading text-sm font-bold uppercase tracking-wider",
-                "transition-all duration-200 hover:scale-105",
-                activeFilter === status
-                  ? "bg-foreground text-background shadow-tactile"
-                  : "bg-background hover:bg-mustard/20",
-              )}
-            >
-              {status}
-            </button>
-          ))}
+          <div className="flex flex-wrap gap-2" aria-label="Filter projects by status">
+            {allStatuses.map((status) => (
+              <button
+                key={status}
+                onClick={() => setActiveStatusFilter(status)}
+                aria-pressed={activeStatusFilter === status}
+                className={cn(
+                  "border-3 border-border px-4 py-2 font-heading text-sm font-bold uppercase tracking-wider",
+                  "transition-all duration-200 hover:scale-105",
+                  activeStatusFilter === status
+                    ? "bg-foreground text-background shadow-tactile"
+                    : "bg-background hover:bg-mustard/20",
+                )}
+              >
+                {status}
+              </button>
+            ))}
+          </div>
+
+          {allTags.length > 0 && (
+            <div className="flex flex-wrap gap-2" aria-label="Filter projects by tag">
+              <button
+                onClick={() => setActiveTagFilter("all")}
+                aria-pressed={activeTagFilter === "all"}
+                className={cn(
+                  "border-2 border-border px-3 py-1.5 font-heading text-xs font-bold uppercase tracking-wider",
+                  "transition-all duration-200 hover:scale-105",
+                  activeTagFilter === "all"
+                    ? "bg-teal text-background shadow-tactile-sm"
+                    : "bg-background hover:bg-teal/20",
+                )}
+              >
+                All Tags
+              </button>
+              {allTags.map((tag) => (
+                <button
+                  key={tag}
+                  onClick={() => setActiveTagFilter(tag)}
+                  aria-pressed={activeTagFilter === tag}
+                  className={cn(
+                    "border-2 border-border px-3 py-1.5 font-heading text-xs font-bold uppercase tracking-wider",
+                    "transition-all duration-200 hover:scale-105",
+                    activeTagFilter === tag
+                      ? "bg-teal text-background shadow-tactile-sm"
+                      : "bg-background hover:bg-teal/20",
+                  )}
+                >
+                  #{tag}
+                </button>
+              ))}
+            </div>
+          )}
         </motion.div>
 
         <AnimatePresence mode="wait">
           <motion.div
-            key={activeFilter}
+            key={`${activeStatusFilter}-${activeTagFilter}`}
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             exit={{ opacity: 0, y: -20 }}
@@ -94,6 +140,20 @@ export function ProjectsPageContent({ projects }: ProjectsPageContentProps) {
             <p className="font-heading text-lg font-bold text-muted">
               No projects found for this filter.
             </p>
+            {hasActiveFilters && (
+              <button
+                onClick={() => {
+                  setActiveStatusFilter("all");
+                  setActiveTagFilter("all");
+                }}
+                className={cn(
+                  "mt-4 border-3 border-border bg-background px-4 py-2 font-heading text-sm font-bold uppercase tracking-wider",
+                  "shadow-tactile transition-all hover:scale-105 hover:bg-mustard/20",
+                )}
+              >
+                Clear Filters
+              </button>
+            )}
           </div>
         )}
       </Container>

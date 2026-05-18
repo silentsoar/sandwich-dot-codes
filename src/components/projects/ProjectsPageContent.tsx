@@ -1,7 +1,8 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
+import { useRouter } from "next/navigation";
 import type { Project } from "contentlayer/generated";
 import { Container } from "@/components/layout/Container";
 import { Section } from "@/components/layout/Section";
@@ -12,23 +13,57 @@ import { cn } from "@/lib/utils";
 
 interface ProjectsPageContentProps {
   projects: Project[];
+  initialStatusFilter?: string;
+  initialTagFilter?: string;
 }
 
 const allStatuses = ["all", "active", "experimental", "archived"] as const;
+type ProjectStatusFilter = (typeof allStatuses)[number];
 
-export function ProjectsPageContent({ projects }: ProjectsPageContentProps) {
-  const [activeStatusFilter, setActiveStatusFilter] = useState<(typeof allStatuses)[number]>(
-    "all",
-  );
-  const [activeTagFilter, setActiveTagFilter] = useState("all");
+function getStatusFilter(status?: string): ProjectStatusFilter {
+  return allStatuses.includes(status as ProjectStatusFilter)
+    ? (status as ProjectStatusFilter)
+    : "all";
+}
 
-  const allTags = Array.from(new Set(projects.flatMap((p) => p.tags))).sort((a, b) =>
-    a.localeCompare(b),
+export function ProjectsPageContent({
+  projects,
+  initialStatusFilter,
+  initialTagFilter,
+}: ProjectsPageContentProps) {
+  const router = useRouter();
+  const initialStatus = getStatusFilter(initialStatusFilter);
+  const initialTag = initialTagFilter || "all";
+  const [activeStatusFilter, setActiveStatusFilter] = useState<ProjectStatusFilter>(initialStatus);
+  const [activeTagFilter, setActiveTagFilter] = useState(initialTag);
+
+  const allTags = Array.from(new Set(projects.flatMap((p) => [...p.tags, ...p.tech]))).sort(
+    (a, b) => a.localeCompare(b),
   );
+
+  useEffect(() => {
+    setActiveStatusFilter(initialStatus);
+    setActiveTagFilter(initialTag);
+  }, [initialStatus, initialTag]);
+
+  const updateFilters = (status: ProjectStatusFilter, tag: string) => {
+    setActiveStatusFilter(status);
+    setActiveTagFilter(tag);
+
+    const params = new URLSearchParams();
+    if (status !== "all") params.set("status", status);
+    if (tag !== "all") params.set("tag", tag);
+
+    const query = params.toString();
+    router.replace(query ? `/projects?${query}` : "/projects", { scroll: false });
+  };
 
   const filteredProjects = projects.filter((project) => {
     const matchesStatus = activeStatusFilter === "all" || project.status === activeStatusFilter;
-    const matchesTag = activeTagFilter === "all" || project.tags.includes(activeTagFilter);
+    const matchesTag =
+      activeTagFilter === "all" ||
+      project.tags.includes(activeTagFilter) ||
+      project.tech.includes(activeTagFilter);
 
     return matchesStatus && matchesTag;
   });
@@ -69,7 +104,7 @@ export function ProjectsPageContent({ projects }: ProjectsPageContentProps) {
             {allStatuses.map((status) => (
               <button
                 key={status}
-                onClick={() => setActiveStatusFilter(status)}
+                onClick={() => updateFilters(status, activeTagFilter)}
                 aria-pressed={activeStatusFilter === status}
                 className={cn(
                   "border-3 border-border px-4 py-2 font-heading text-sm font-bold uppercase tracking-wider",
@@ -87,7 +122,7 @@ export function ProjectsPageContent({ projects }: ProjectsPageContentProps) {
           {allTags.length > 0 && (
             <div className="flex flex-wrap gap-2" aria-label="Filter projects by tag">
               <button
-                onClick={() => setActiveTagFilter("all")}
+                onClick={() => updateFilters(activeStatusFilter, "all")}
                 aria-pressed={activeTagFilter === "all"}
                 className={cn(
                   "border-2 border-border px-3 py-1.5 font-heading text-xs font-bold uppercase tracking-wider",
@@ -102,7 +137,7 @@ export function ProjectsPageContent({ projects }: ProjectsPageContentProps) {
               {allTags.map((tag) => (
                 <button
                   key={tag}
-                  onClick={() => setActiveTagFilter(tag)}
+                  onClick={() => updateFilters(activeStatusFilter, tag)}
                   aria-pressed={activeTagFilter === tag}
                   className={cn(
                     "border-2 border-border px-3 py-1.5 font-heading text-xs font-bold uppercase tracking-wider",
@@ -142,10 +177,7 @@ export function ProjectsPageContent({ projects }: ProjectsPageContentProps) {
             </p>
             {hasActiveFilters && (
               <button
-                onClick={() => {
-                  setActiveStatusFilter("all");
-                  setActiveTagFilter("all");
-                }}
+                onClick={() => updateFilters("all", "all")}
                 className={cn(
                   "mt-4 border-3 border-border bg-background px-4 py-2 font-heading text-sm font-bold uppercase tracking-wider",
                   "shadow-tactile transition-all hover:scale-105 hover:bg-mustard/20",

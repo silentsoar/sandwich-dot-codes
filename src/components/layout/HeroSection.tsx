@@ -35,6 +35,14 @@ const phonePositions = [
   { rotate: -2, x: 80, y: 10, z: 1 },
 ];
 
+const heroProjectTags = [
+  { label: "TensorFlow.js", tag: "TensorFlow.js", variant: "teal", rotation: -1 },
+  { label: "Canvas API", tag: "Canvas API", variant: "salmon", rotation: 1 },
+  { label: "Web Audio", tag: "Web Audio API", variant: "slime", rotation: -2 },
+  { label: "React", tag: "React", variant: "lavender", rotation: 0 },
+  { label: "Next.js", tag: "Next.js", variant: "mustard", rotation: 2 },
+] as const;
+
 function PhoneMockup({ src, alt, style }: { src: string; alt: string; style: React.CSSProperties }) {
   return (
     <div className="absolute top-0 right-0" style={{ ...style, zIndex: style.zIndex as number }}>
@@ -132,21 +140,18 @@ export function HeroSection({ showcases = [] }: HeroSectionProps) {
               variants={fadeUp}
               className="mt-8 flex flex-wrap gap-2"
             >
-              <StickerTag variant="teal" rotation={-1}>
-                TensorFlow.js
-              </StickerTag>
-              <StickerTag variant="salmon" rotation={1}>
-                Canvas API
-              </StickerTag>
-              <StickerTag variant="slime" rotation={-2}>
-                Web Audio
-              </StickerTag>
-              <StickerTag variant="lavender" rotation={0}>
-                React
-              </StickerTag>
-              <StickerTag variant="mustard" rotation={2}>
-                Next.js
-              </StickerTag>
+              {heroProjectTags.map((tag) => (
+                <Link
+                  key={tag.label}
+                  href={`/projects?tag=${encodeURIComponent(tag.tag)}`}
+                  className="inline-block transition-transform hover:-translate-y-0.5"
+                  aria-label={`View ${tag.label} projects`}
+                >
+                  <StickerTag variant={tag.variant} rotation={tag.rotation}>
+                    {tag.label}
+                  </StickerTag>
+                </Link>
+              ))}
             </motion.div>
           </div>
 

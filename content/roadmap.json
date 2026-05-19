@@ -139,7 +139,8 @@
           "id": "card-1779055054969-7oul2",
           "text": "\"Splinched\" Automated sample chopper. Test the limits of serverless.",
           "title": "\"Splinched\" Automated sample chopper. Test the limits of serverless.",
-          "details": ""
+          "details": "",
+          "lane": "build"
         },
         {
           "id": "card-1779055085784-gzmj8",

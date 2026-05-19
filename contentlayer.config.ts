@@ -3,8 +3,25 @@ import readingTime from "reading-time";
 import rehypeSlug from "rehype-slug";
 import rehypeAutolinkHeadings from "rehype-autolink-headings";
 import rehypeHighlight from "rehype-highlight";
-import cLike from "highlight.js/lib/languages/c-like.js";
 import remarkGfm from "remark-gfm";
+
+const glsl = () => ({
+  name: "GLSL",
+  case_insensitive: false,
+  keywords: {
+    keyword:
+      "attribute const uniform varying buffer shared coherent volatile restrict readonly writeonly atomic_uint layout centroid flat smooth noperspective patch sample break continue do for while switch case default if else subroutine in out inout float double int void bool true false invariant discard return mat2 mat3 mat4 vec2 vec3 vec4 ivec2 ivec3 ivec4 bvec2 bvec3 bvec4 sampler2D samplerCube struct",
+    built_in:
+      "radians degrees sin cos tan asin acos atan pow exp log exp2 log2 sqrt inversesqrt abs sign floor trunc round ceil fract mod min max clamp mix step smoothstep length distance dot cross normalize faceforward reflect refract texture texture2D textureCube gl_Position gl_FragCoord gl_FragColor",
+  },
+  contains: [
+    { scope: "comment", begin: /\/\*/, end: /\*\// },
+    { scope: "comment", begin: /\/\//, end: /$/ },
+    { scope: "string", begin: /"/, end: /"/ },
+    { scope: "number", begin: /\b\d+(\.\d+)?/ },
+    { scope: "meta", begin: /#\s*[a-z]+\b/, end: /$/ },
+  ],
+});
 
 export const Project = defineDocumentType(() => ({
   name: "Project",
@@ -107,7 +124,7 @@ export default makeSource({
     rehypePlugins: [
       rehypeSlug,
       [rehypeAutolinkHeadings, { behavior: "wrap" }],
-      [rehypeHighlight, { languages: { glsl: cLike } }],
+      [rehypeHighlight, { languages: { glsl } }],
     ],
   },
 });

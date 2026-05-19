@@ -210,27 +210,51 @@ export function HeroSection({ showcases = [], tags = [] }: HeroSectionProps) {
       </Container>
 
       <div
-        className="absolute -top-16 -right-24 animate-float opacity-[0.06] pointer-events-none hidden lg:block"
+        className="absolute -top-28 -right-32 animate-float opacity-[0.08] pointer-events-none hidden lg:block"
         style={{ animationDuration: "12s", animationDelay: "-2s" }}
       >
         <div className="rotate-12">
-          <DoodleAccent variant="star" color="#D6B347" size={420} />
+          <DoodleAccent variant="star" color="#D6B347" size={560} />
         </div>
       </div>
       <div
-        className="absolute -bottom-20 -left-16 animate-float opacity-[0.05] pointer-events-none hidden lg:block"
+        className="absolute -bottom-32 -left-28 animate-float opacity-[0.07] pointer-events-none hidden lg:block"
         style={{ animationDuration: "14s", animationDelay: "-5s" }}
       >
         <div className="rotate-[-15deg]">
-          <DoodleAccent variant="circle" color="#6F9D9A" size={400} />
+          <DoodleAccent variant="circle" color="#6F9D9A" size={540} />
         </div>
       </div>
       <div
-        className="absolute top-1/4 right-1/4 animate-float opacity-[0.04] pointer-events-none hidden xl:block"
+        className="absolute top-1/4 right-1/4 animate-float opacity-[0.06] pointer-events-none hidden xl:block"
         style={{ animationDuration: "10s", animationDelay: "-7s" }}
       >
         <div className="rotate-6">
-          <DoodleAccent variant="squiggle" color="#B8A7CC" size={384} />
+          <DoodleAccent variant="squiggle" color="#B8A7CC" size={500} />
+        </div>
+      </div>
+      <div
+        className="absolute -top-10 left-[14%] animate-float opacity-[0.07] pointer-events-none hidden lg:block"
+        style={{ animationDuration: "11s", animationDelay: "-4s" }}
+      >
+        <div className="rotate-[-8deg]">
+          <DoodleAccent variant="dot-cluster" color="#D98B73" size={300} />
+        </div>
+      </div>
+      <div
+        className="absolute bottom-8 right-[8%] animate-float opacity-[0.07] pointer-events-none hidden lg:block"
+        style={{ animationDuration: "13s", animationDelay: "-8s" }}
+      >
+        <div className="rotate-12">
+          <DoodleAccent variant="x" color="#9FAF6F" size={260} />
+        </div>
+      </div>
+      <div
+        className="absolute bottom-1/3 left-[44%] animate-float opacity-[0.06] pointer-events-none hidden xl:block"
+        style={{ animationDuration: "15s", animationDelay: "-10s" }}
+      >
+        <div className="rotate-[-18deg]">
+          <DoodleAccent variant="arrow" color="#D6B347" size={320} />
         </div>
       </div>
     </Section>

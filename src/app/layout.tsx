@@ -3,6 +3,7 @@ import { Fraunces, Inter } from "next/font/google";
 import { Navbar } from "@/components/layout/Navbar";
 import { Footer } from "@/components/layout/Footer";
 import { NoiseOverlay } from "@/components/decorative/NoiseOverlay";
+import { DoodleBackground } from "@/components/decorative/DoodleBackground";
 import { Providers } from "@/components/ui/Providers";
 import { siteConfig } from "@/lib/config";
 import "@/styles/globals.css";
@@ -54,8 +55,9 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
       <body className="min-h-screen bg-background font-body text-foreground dark:bg-background-dark dark:text-foreground-dark">
         <Providers>
           <NoiseOverlay />
+          <DoodleBackground />
           <Navbar />
-          <main>{children}</main>
+          <main className="relative z-10">{children}</main>
           <Footer />
         </Providers>
       </body>

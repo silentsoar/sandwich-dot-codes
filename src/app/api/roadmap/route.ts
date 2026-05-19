@@ -1,6 +1,6 @@
 import { NextResponse } from "next/server";
 import { z } from "zod";
-import { isValidAuth } from "../auth/route";
+import { isValidRoadmapAuth } from "@/lib/roadmap-auth";
 
 export const revalidate = 0;
 
@@ -176,7 +176,7 @@ export async function GET() {
 }
 
 export async function POST(request: Request) {
-  if (!isValidAuth()) {
+  if (!isValidRoadmapAuth()) {
     return NextResponse.json({ error: "Not authenticated" }, { status: 401 });
   }
 

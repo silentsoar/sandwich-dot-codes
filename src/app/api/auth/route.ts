@@ -7,10 +7,6 @@ import {
   roadmapCookieOptions,
 } from "@/lib/roadmap-auth";
 
-export function isValidAuth(): boolean {
-  return isValidRoadmapAuth();
-}
-
 export async function POST(request: Request) {
   let body: unknown;
   try {

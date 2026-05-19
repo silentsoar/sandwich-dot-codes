@@ -59,10 +59,6 @@
           "text": "Article: Why AI Coding Agents Need Product Managers More Than Ever As agents write more code, PM skill shifts toward framing, constraints, QA, and taste."
         },
         {
-          "id": "card-1779181201254-zrib7",
-          "text": "From Prompt to PRD to Prototype: My AI App-Building Workflow A practical walkthrough of how you turn hobby ideas into AI-readable PRDs and deployable projects."
-        },
-        {
           "id": "card-1779181228717-khnex",
           "text": "The Case for Algorithmic Creativity Argue that randomness, rules, MIDI patterns, and Canvas APIs can produce meaningful creative work without generative AI."
         },
@@ -87,6 +83,11 @@
         {
           "id": "card-1779055127746-h2z0c",
           "text": "\"Expecto\" neural network sandbox. Visual way to understand how NNs work. Do some fancy things with animation."
+        },
+        {
+          "id": "card-1779181201254-zrib7",
+          "text": "From Prompt to PRD to Prototype: My AI App-Building Workflow A practical walkthrough of how you turn hobby ideas into AI-readable PRDs and deployable projects.",
+          "lane": "write"
         }
       ]
     },

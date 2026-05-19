@@ -1,4 +1,4 @@
-import { createHmac, timingSafeEqual } from "crypto";
+import { createHash, createHmac, timingSafeEqual } from "crypto";
 import { cookies } from "next/headers";
 
 export const ROADMAP_COOKIE_NAME = "roadmap_auth";
@@ -31,9 +31,8 @@ function sign(value: string): string {
 }
 
 function safeEqual(a: string, b: string): boolean {
-  const aBuffer = Buffer.from(a);
-  const bBuffer = Buffer.from(b);
-  if (aBuffer.length !== bBuffer.length) return false;
+  const aBuffer = createHash("sha256").update(a).digest();
+  const bBuffer = createHash("sha256").update(b).digest();
 
   return timingSafeEqual(aBuffer, bBuffer);
 }

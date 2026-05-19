@@ -9,6 +9,8 @@ export const metadata: Metadata = {
   description: "The big board of things to build, fix, and dream up.",
 };
 
+export const dynamic = "force-dynamic";
+
 function readBoard() {
   try {
     const filePath = join(process.cwd(), "content", "roadmap.json");

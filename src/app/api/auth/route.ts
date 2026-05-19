@@ -2,7 +2,6 @@ import { NextResponse } from "next/server";
 import {
   ROADMAP_COOKIE_NAME,
   createRoadmapAuthToken,
-  isValidRoadmapAuth,
   isValidRoadmapPassword,
   roadmapCookieOptions,
 } from "@/lib/roadmap-auth";

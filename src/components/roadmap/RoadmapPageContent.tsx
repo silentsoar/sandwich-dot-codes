@@ -11,7 +11,10 @@ import { LoginForm } from "./LoginForm";
 
 interface KanbanCardData {
   id: string;
-  text: string;
+  title?: string;
+  details?: string;
+  text?: string;
+  lane?: string;
 }
 
 interface KanbanBoardData {

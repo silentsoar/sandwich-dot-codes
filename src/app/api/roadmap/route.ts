@@ -10,7 +10,10 @@ const FILE_PATH = "content/roadmap.json";
 
 interface KanbanCard {
   id: string;
-  text: string;
+  title?: string;
+  details?: string;
+  text?: string;
+  lane?: string;
 }
 
 interface KanbanColumn {

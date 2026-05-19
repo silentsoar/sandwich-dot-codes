@@ -7,7 +7,9 @@ import { cn } from "@/lib/utils";
 
 export interface KanbanCardData {
   id: string;
-  text: string;
+  title?: string;
+  details?: string;
+  text?: string;
   lane?: string;
 }
 
@@ -19,7 +21,7 @@ interface KanbanCardProps {
   isAuthenticated: boolean;
   onDragStart: (cardId: string, columnId: string) => void;
   onDelete: (cardId: string, columnId: string) => void;
-  onEdit: (cardId: string, columnId: string, newText: string) => void;
+  onEdit: (cardId: string, columnId: string, title: string, details: string) => void;
   index: number;
 }
 
@@ -34,19 +36,24 @@ export function KanbanCard({
   onEdit,
   index,
 }: KanbanCardProps) {
+  const title = card.title ?? card.text ?? "Untitled";
+  const details = card.details ?? "";
   const [isEditing, setIsEditing] = useState(false);
-  const [editText, setEditText] = useState(card.text);
+  const [editTitle, setEditTitle] = useState(title);
+  const [editDetails, setEditDetails] = useState(details);
   const [isDragging, setIsDragging] = useState(false);
   const inputRef = useRef<HTMLInputElement>(null);
 
   const rotation = ((index * 7 + 3) % 5) - 2;
 
   function handleSave() {
-    const trimmed = editText.trim();
-    if (trimmed && trimmed !== card.text) {
-      onEdit(card.id, columnId, trimmed);
+    const trimmedTitle = editTitle.trim();
+    const trimmedDetails = editDetails.trim();
+    if (trimmedTitle) {
+      onEdit(card.id, columnId, trimmedTitle, trimmedDetails);
     } else {
-      setEditText(card.text);
+      setEditTitle(title);
+      setEditDetails(details);
     }
     setIsEditing(false);
   }
@@ -90,41 +97,64 @@ export function KanbanCard({
         )}
 
         {isEditing ? (
-          <div className="flex items-center gap-1">
+          <div className="flex flex-col gap-2">
             <input
               ref={inputRef}
-              value={editText}
-              onChange={(e) => setEditText(e.target.value)}
+              value={editTitle}
+              onChange={(e) => setEditTitle(e.target.value)}
               onKeyDown={(e) => {
-                if (e.key === "Enter") handleSave();
+                if (e.key === "Enter" && (e.metaKey || e.ctrlKey)) handleSave();
                 if (e.key === "Escape") {
-                  setEditText(card.text);
+                  setEditTitle(title);
+                  setEditDetails(details);
                   setIsEditing(false);
                 }
               }}
-              onBlur={handleSave}
-              className="w-full border-b-2 border-border bg-transparent font-body text-sm text-foreground outline-none"
+              placeholder="Title"
+              className="w-full border-b-2 border-border bg-transparent font-heading text-sm font-bold text-foreground outline-none"
               autoFocus
+            />
+            <textarea
+              value={editDetails}
+              onChange={(e) => setEditDetails(e.target.value)}
+              onKeyDown={(e) => {
+                if (e.key === "Enter" && (e.metaKey || e.ctrlKey)) handleSave();
+                if (e.key === "Escape") {
+                  setEditTitle(title);
+                  setEditDetails(details);
+                  setIsEditing(false);
+                }
+              }}
+              placeholder="Details"
+              className="min-h-20 w-full resize-y border-2 border-border/50 bg-background/60 p-2 font-body text-sm text-foreground outline-none focus:border-border dark:bg-background-dark/60"
             />
             <button
               onClick={handleSave}
-              className="shrink-0 rounded p-0.5 transition-colors hover:bg-mustard/30"
-              aria-label="Save"
+              className="flex items-center justify-center gap-1 border-2 border-border bg-mustard/30 px-3 py-1.5 font-heading text-xs font-bold uppercase tracking-wider transition-colors hover:bg-mustard/50"
             >
-              <Check size={14} className="text-muted" />
+              <Check size={14} />
+              Save
             </button>
           </div>
         ) : (
-          <p className="pr-8 font-body text-sm leading-relaxed text-foreground">
-            {card.text}
-          </p>
+          <div className="pr-8">
+            <h5 className="font-heading text-sm font-black leading-snug text-foreground">
+              {title}
+            </h5>
+            {details && (
+              <p className="mt-2 whitespace-pre-wrap font-body text-sm leading-relaxed text-foreground/80">
+                {details}
+              </p>
+            )}
+          </div>
         )}
 
         {isAuthenticated && !isEditing && (
           <div className="absolute top-2 right-2 flex gap-0.5 opacity-0 transition-opacity group-hover:opacity-100">
             <button
               onClick={() => {
-                setEditText(card.text);
+                setEditTitle(title);
+                setEditDetails(details);
                 setIsEditing(true);
               }}
               className="rounded p-1 transition-colors hover:bg-mustard/30"

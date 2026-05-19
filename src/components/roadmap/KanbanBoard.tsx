@@ -73,8 +73,26 @@ interface KanbanBoardProps {
   isAuthenticated: boolean;
 }
 
+function normalizeCard(card: KanbanCardData): KanbanCardData {
+  return {
+    ...card,
+    title: card.title ?? card.text ?? "Untitled",
+    details: card.details ?? "",
+  };
+}
+
+function normalizeBoard(board: KanbanBoardData): KanbanBoardData {
+  return {
+    ...board,
+    columns: board.columns.map((column) => ({
+      ...column,
+      cards: column.cards.map(normalizeCard),
+    })),
+  };
+}
+
 export function KanbanBoard({ initialBoard, isAuthenticated }: KanbanBoardProps) {
-  const [board, setBoard] = useState<KanbanBoardData>(initialBoard);
+  const [board, setBoard] = useState<KanbanBoardData>(() => normalizeBoard(initialBoard));
   const [saveStatus, setSaveStatus] = useState<"idle" | "saving" | "saved" | "error">("idle");
   const [saveMessage, setSaveMessage] = useState("");
 
@@ -135,14 +153,14 @@ export function KanbanBoard({ initialBoard, isAuthenticated }: KanbanBoardProps)
     });
   }
 
-  function addCard(columnId: string, text: string, laneId: string) {
+  function addCard(columnId: string, title: string, details: string, laneId: string) {
     updateBoard((prev) => {
       const newBoard = { ...prev, columns: prev.columns.map((c) => ({ ...c, cards: [...c.cards] })) };
       const col = newBoard.columns.find((c) => c.id === columnId);
       if (!col) return prev;
 
       const id = `card-${Date.now()}-${Math.random().toString(36).slice(2, 7)}`;
-      col.cards.push({ id, text, lane: laneId });
+      col.cards.push({ id, title, details, lane: laneId });
       return newBoard;
     });
   }
@@ -158,7 +176,7 @@ export function KanbanBoard({ initialBoard, isAuthenticated }: KanbanBoardProps)
     });
   }
 
-  function editCard(cardId: string, columnId: string, newText: string) {
+  function editCard(cardId: string, columnId: string, title: string, details: string) {
     updateBoard((prev) => {
       const newBoard = { ...prev, columns: prev.columns.map((c) => ({ ...c, cards: [...c.cards] })) };
       const col = newBoard.columns.find((c) => c.id === columnId);
@@ -167,7 +185,9 @@ export function KanbanBoard({ initialBoard, isAuthenticated }: KanbanBoardProps)
       const card = col.cards.find((c) => c.id === cardId);
       if (!card) return prev;
 
-      card.text = newText;
+      card.title = title;
+      card.details = details;
+      delete card.text;
       return newBoard;
     });
   }

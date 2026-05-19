@@ -28,9 +28,9 @@ interface KanbanColumnProps {
   swimlanes: SwimlaneConfig[];
   isAuthenticated: boolean;
   onMoveCard: (cardId: string, fromColumn: string, toColumn: string, toIndex: number, toLane: string) => void;
-  onAddCard: (columnId: string, text: string, laneId: string) => void;
+  onAddCard: (columnId: string, title: string, details: string, laneId: string) => void;
   onDeleteCard: (cardId: string, columnId: string) => void;
-  onEditCard: (cardId: string, columnId: string, newText: string) => void;
+  onEditCard: (cardId: string, columnId: string, title: string, details: string) => void;
 }
 
 export function KanbanColumn({
@@ -47,7 +47,8 @@ export function KanbanColumn({
   const [dropTarget, setDropTarget] = useState<{ laneId: string; index: number } | null>(null);
   const [isAdding, setIsAdding] = useState(false);
   const [addingLane, setAddingLane] = useState<string | null>(null);
-  const [newText, setNewText] = useState("");
+  const [newTitle, setNewTitle] = useState("");
+  const [newDetails, setNewDetails] = useState("");
 
   function getLaneCards(laneId: string) {
     return column.cards.filter((card) => (card.lane ?? swimlanes[0]?.id) === laneId);
@@ -118,10 +119,12 @@ export function KanbanColumn({
   }
 
   function handleAddCard(laneId: string) {
-    const trimmed = newText.trim();
-    if (trimmed) {
-      onAddCard(column.id, trimmed, laneId);
-      setNewText("");
+    const trimmedTitle = newTitle.trim();
+    const trimmedDetails = newDetails.trim();
+    if (trimmedTitle) {
+      onAddCard(column.id, trimmedTitle, trimmedDetails, laneId);
+      setNewTitle("");
+      setNewDetails("");
       setIsAdding(false);
       setAddingLane(null);
     }
@@ -216,19 +219,35 @@ export function KanbanColumn({
                   {isAdding && addingLane === lane.id ? (
                     <div className="flex flex-col gap-2">
                       <input
-                        value={newText}
-                        onChange={(e) => setNewText(e.target.value)}
+                        value={newTitle}
+                        onChange={(e) => setNewTitle(e.target.value)}
                         onKeyDown={(e) => {
-                          if (e.key === "Enter") handleAddCard(lane.id);
+                          if (e.key === "Enter" && (e.metaKey || e.ctrlKey)) handleAddCard(lane.id);
                           if (e.key === "Escape") {
-                            setNewText("");
+                            setNewTitle("");
+                            setNewDetails("");
                             setIsAdding(false);
                             setAddingLane(null);
                           }
                         }}
-                        placeholder={`Add to ${lane.title}`}
+                        placeholder="Title"
                         className="w-full border-3 border-border bg-background p-2 font-body text-sm text-foreground outline-none focus:shadow-tactile-sm"
                         autoFocus
+                      />
+                      <textarea
+                        value={newDetails}
+                        onChange={(e) => setNewDetails(e.target.value)}
+                        onKeyDown={(e) => {
+                          if (e.key === "Enter" && (e.metaKey || e.ctrlKey)) handleAddCard(lane.id);
+                          if (e.key === "Escape") {
+                            setNewTitle("");
+                            setNewDetails("");
+                            setIsAdding(false);
+                            setAddingLane(null);
+                          }
+                        }}
+                        placeholder={`Details for ${lane.title}`}
+                        className="min-h-20 w-full resize-y border-3 border-border bg-background p-2 font-body text-sm text-foreground outline-none focus:shadow-tactile-sm"
                       />
                       <div className="flex gap-1">
                         <button
@@ -238,7 +257,7 @@ export function KanbanColumn({
                           Add
                         </button>
                         <button
-                          onClick={() => { setNewText(""); setIsAdding(false); setAddingLane(null); }}
+                          onClick={() => { setNewTitle(""); setNewDetails(""); setIsAdding(false); setAddingLane(null); }}
                           className="border-2 border-border px-3 py-1.5 font-heading text-xs font-bold uppercase tracking-wider transition-colors hover:bg-salmon/30"
                         >
                           <X size={14} />

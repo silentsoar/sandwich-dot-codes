@@ -6,7 +6,7 @@ export const ROADMAP_COOKIE_NAME = "roadmap_auth";
 const COOKIE_MAX_AGE = 60 * 60 * 24 * 7;
 const DEFAULT_SECRET = "sandwich-codes-roadmap-dev-secret";
 
-function getRoadmapPassword(): string {
+export function getRoadmapPassword(): string {
   const password = process.env.ROADMAP_PASSWORD;
 
   if (process.env.NODE_ENV === "production" && !password) {
@@ -17,13 +17,10 @@ function getRoadmapPassword(): string {
 }
 
 function getAuthSecret(): string {
-  const secret = process.env.ROADMAP_AUTH_SECRET ?? process.env.NEXTAUTH_SECRET;
-
-  if (process.env.NODE_ENV === "production" && !secret) {
-    throw new Error("ROADMAP_AUTH_SECRET or NEXTAUTH_SECRET must be configured in production");
-  }
-
-  return secret ?? DEFAULT_SECRET;
+  return process.env.ROADMAP_AUTH_SECRET
+    ?? process.env.NEXTAUTH_SECRET
+    ?? process.env.ROADMAP_PASSWORD
+    ?? DEFAULT_SECRET;
 }
 
 function sign(value: string): string {

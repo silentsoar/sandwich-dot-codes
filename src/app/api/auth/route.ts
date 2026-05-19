@@ -7,26 +7,31 @@ import {
 } from "@/lib/roadmap-auth";
 
 export async function POST(request: Request) {
-  let body: unknown;
   try {
-    body = await request.json();
-  } catch {
-    return NextResponse.json({ error: "Invalid request body" }, { status: 400 });
+    let body: unknown;
+    try {
+      body = await request.json();
+    } catch {
+      return NextResponse.json({ error: "Invalid request body" }, { status: 400 });
+    }
+
+    const password = typeof body === "object" && body !== null && "password" in body
+      ? (body as { password?: unknown }).password
+      : undefined;
+
+    if (!isValidRoadmapPassword(password)) {
+      return NextResponse.json({ error: "Invalid password" }, { status: 401 });
+    }
+
+    const response = NextResponse.json({ success: true });
+
+    response.cookies.set(ROADMAP_COOKIE_NAME, createRoadmapAuthToken(), roadmapCookieOptions());
+
+    return response;
+  } catch (error) {
+    const message = error instanceof Error ? error.message : "Authentication failed";
+    return NextResponse.json({ error: message }, { status: 500 });
   }
-
-  const password = typeof body === "object" && body !== null && "password" in body
-    ? (body as { password?: unknown }).password
-    : undefined;
-
-  if (!isValidRoadmapPassword(password)) {
-    return NextResponse.json({ error: "Invalid password" }, { status: 401 });
-  }
-
-  const response = NextResponse.json({ success: true });
-
-  response.cookies.set(ROADMAP_COOKIE_NAME, createRoadmapAuthToken(), roadmapCookieOptions());
-
-  return response;
 }
 
 export async function DELETE() {

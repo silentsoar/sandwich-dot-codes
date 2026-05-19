@@ -56,7 +56,7 @@
         },
         {
           "id": "card-1779181173057-x9pm0",
-          "text": "Article: Why AI Coding Agents Need Product Managers More Than Ever As agents write more code, PM skill shifts toward framing, constraints, QA, and taste.",
+          "text": "The New PM Job: Herding the Robot Into Building the Right Thing - As AI agents generate more of the code, product work shifts toward intent, constraints, review, and quality control.",
           "lane": "write"
         },
         {
@@ -66,12 +66,17 @@
         },
         {
           "id": "card-1779181278941-hzxbk",
-          "text": "The Anti-SaaS Portfolio: Why Some Apps Should Just Be Weird A philosophy piece arguing that not every app needs a market, pricing page, or growth loop. Some should exist as artifacts.",
+          "text": "The Case for Useless-Sounding Apps - A philosophy of making software that is not trying to become SaaS, raise money, or ruin your inbox.",
           "lane": "write"
         },
         {
           "id": "card-1779181284518-64y9a",
-          "text": "How to Judge an AI-Built App When You Didn’t Hand-Code Every Line A useful PM/creator rubric: concept, interaction quality, maintainability, accessibility, performance, security, and emotional response.",
+          "text": "Is This AI-Built App Any Good? - A PM-ish checklist for judging concept, usability, maintainability, accessibility, performance, security, and whether it feels horrible to use.",
+          "lane": "write"
+        },
+        {
+          "id": "card-1779187671768-7f93s",
+          "text": "Product Prioritisation Is Not as Objective as Everyone Pretends - Feature ranking frameworks look like machines for producing truth, but they mostly produce structured opinions.  This article asks whether objective prioritisation is possible, what “objective enough” might look like, and whether companies actually want objectivity — or just a tidier way to justify difficult choices.",
           "lane": "write"
         }
       ]
@@ -90,7 +95,7 @@
         },
         {
           "id": "card-1779181201254-zrib7",
-          "text": "From Prompt to PRD to Prototype: My AI App-Building Workflow A practical walkthrough of how you turn hobby ideas into AI-readable PRDs and deployable projects.",
+          "text": "Turning Weird Little Ideas Into Buildable Apps - My practical process for moving from vague concept to AI-readable PRD to deployable project.",
           "lane": "write"
         }
       ]

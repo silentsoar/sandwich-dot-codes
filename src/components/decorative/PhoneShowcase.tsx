@@ -66,7 +66,7 @@ export function PhoneShowcase({ src, alt = "App screenshot", className, cropped 
             <path
               d="M2 10 C18 3, 32 15, 50 8 C68 1, 84 16, 104 9 C126 2, 138 14, 160 8 C184 1, 196 15, 222 9 C246 3, 260 14, 298 7"
               stroke="currentColor"
-              strokeWidth="5"
+              strokeWidth="7"
               strokeLinecap="round"
               strokeLinejoin="round"
               fill="none"

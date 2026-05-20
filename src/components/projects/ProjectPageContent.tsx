@@ -24,7 +24,8 @@ const statusColors: Record<string, "slime" | "mustard" | "muted"> = {
 };
 
 export function ProjectPageContent({ project }: ProjectPageContentProps) {
-  const hasShowcase = !!project.showcase;
+  const showcaseImage = project.showcase || project.cover;
+  const hasShowcase = !!showcaseImage;
 
   return (
     <>
@@ -106,7 +107,7 @@ export function ProjectPageContent({ project }: ProjectPageContentProps) {
               {hasShowcase && (
                 <div className="hidden flex-shrink-0 md:block md:w-[260px] lg:w-[300px]">
                   <PhoneShowcase
-                    src={project.showcase!}
+                    src={showcaseImage}
                     alt={`${project.title} on iPhone`}
                   />
                 </div>

@@ -57,7 +57,7 @@ export function ProjectPageContent({ project }: ProjectPageContentProps) {
                   )}
                 </div>
 
-                <h1 className="font-heading text-display font-black leading-[0.95] tracking-tighter rotate-[-0.3deg]">
+                <h1 className="font-heading text-headline font-black leading-[0.95] tracking-tighter rotate-[-0.3deg]">
                   {project.title}
                 </h1>
 
@@ -119,13 +119,15 @@ export function ProjectPageContent({ project }: ProjectPageContentProps) {
       <CrookedDivider variant="scribble" className="my-4" />
 
       <Section spacing="default">
-        <Container size="narrow">
+        <Container size="narrow" className="max-w-[57.6rem]">
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.2, type: "spring", stiffness: 200, damping: 20 }}
           >
-            <MDXRenderer code={project.body.code} />
+            <div className="border-3 border-border bg-background p-5 shadow-tactile paper-grain dark:bg-background-dark sm:p-8">
+              <MDXRenderer code={project.body.code} />
+            </div>
           </motion.div>
         </Container>
       </Section>

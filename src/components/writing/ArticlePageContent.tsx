@@ -113,7 +113,7 @@ export function ArticlePageContent({ article }: ArticlePageContentProps) {
       <CrookedDivider variant="wavy" color="#6F9D9A" className="my-4" />
 
       <Section spacing="default">
-        <Container size="narrow">
+        <Container size="narrow" className="max-w-[57.6rem]">
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}

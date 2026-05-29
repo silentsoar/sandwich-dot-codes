@@ -115,12 +115,6 @@
           "id": "card-1779055127746-h2z0c",
           "title": "Expecto",
           "details": "Neural network sandbox. Visual way to understand how NNs work. Do some fancy things with animation."
-        },
-        {
-          "id": "card-1779181201254-zrib7",
-          "title": "Turning Weird Little Ideas Into Buildable Apps",
-          "details": "My practical process for moving from vague concept to AI-readable PRD to deployable project.",
-          "lane": "write"
         }
       ]
     },
@@ -159,6 +153,12 @@
           "details": "",
           "text": "Polish project page layouts",
           "lane": "build"
+        },
+        {
+          "id": "card-1779181201254-zrib7",
+          "title": "Turning Weird Little Ideas Into Buildable Apps",
+          "details": "My practical process for moving from vague concept to AI-readable PRD to deployable project.",
+          "lane": "write"
         }
       ]
     },

@@ -17,9 +17,9 @@
         },
         {
           "id": "card-1779054856801-kpvig",
-          "text": "Upload a photo or artwork and convert it into a LEGO mosaic plan with part counts, colour mapping, and build instructions. Already exists - how would mine be better?",
           "title": "Upload a photo or artwork and convert it into a LEGO mosaic plan with part counts, colour mapping, and build instructions. Already exists - how would mine be better?",
-          "details": ""
+          "details": "",
+          "text": "Upload a photo or artwork and convert it into a LEGO mosaic plan with part counts, colour mapping, and build instructions. Already exists - how would mine be better?"
         },
         {
           "id": "card-1779054874676-dw2c2",
@@ -29,33 +29,33 @@
         },
         {
           "id": "card-1779054926509-3lqvb",
-          "text": "“Neighborhood Soundwatch” An AI-assisted sample library browser that auto-tags loops by BPM, key, genre, instrument, mood, and energy.",
           "title": "“Neighborhood Soundwatch” An AI-assisted sample library browser that auto-tags loops by BPM, key, genre, instrument, mood, and energy.",
-          "details": ""
+          "details": "",
+          "text": "“Neighborhood Soundwatch” An AI-assisted sample library browser that auto-tags loops by BPM, key, genre, instrument, mood, and energy."
         },
         {
           "id": "card-1779054953842-apkwy",
-          "text": "“Upload or enter a tracklist and get a suggested DJ set order based on BPM, key, energy, genre, and mood arc.",
           "title": "“Upload or enter a tracklist and get a suggested DJ set order based on BPM, key, energy, genre, and mood arc.",
-          "details": ""
+          "details": "",
+          "text": "“Upload or enter a tracklist and get a suggested DJ set order based on BPM, key, energy, genre, and mood arc."
         },
         {
           "id": "card-1779054961759-3a5l1",
-          "text": "”PIAB (Party In A Box)” Generate themed crates for gigs, parties, radio shows, or mixes, such as “sunset warm-up house” or “late-night leftfield breaks.”",
           "title": "”PIAB (Party In A Box)” Generate themed crates for gigs, parties, radio shows, or mixes, such as “sunset warm-up house” or “late-night leftfield breaks.”",
-          "details": ""
+          "details": "",
+          "text": "”PIAB (Party In A Box)” Generate themed crates for gigs, parties, radio shows, or mixes, such as “sunset warm-up house” or “late-night leftfield breaks.”"
         },
         {
           "id": "card-1779054969743-3hr6z",
-          "text": "” A website that turns a DJ setlist into a visual energy journey, showing peaks, breathers, tempo shifts, and mood changes. Could be merged with PIAB.",
           "title": "” A website that turns a DJ setlist into a visual energy journey, showing peaks, breathers, tempo shifts, and mood changes. Could be merged with PIAB.",
-          "details": ""
+          "details": "",
+          "text": "” A website that turns a DJ setlist into a visual energy journey, showing peaks, breathers, tempo shifts, and mood changes. Could be merged with PIAB."
         },
         {
           "id": "card-1779054981093-qgrpl",
-          "text": "A songwriter’s rhyme assistant that avoids cliché rhymes and suggests more interesting near-rhymes, slant rhymes, and internal rhymes.",
           "title": "A songwriter’s rhyme assistant that avoids cliché rhymes and suggests more interesting near-rhymes, slant rhymes, and internal rhymes.",
-          "details": ""
+          "details": "",
+          "text": "A songwriter’s rhyme assistant that avoids cliché rhymes and suggests more interesting near-rhymes, slant rhymes, and internal rhymes."
         }
       ]
     },
@@ -71,39 +71,39 @@
         },
         {
           "id": "card-1779054995100-oy4l1",
-          "text": "Acrilyc Pour idea exploration",
           "title": "Acrilyc Pour idea exploration",
-          "details": ""
+          "details": "",
+          "text": "Acrilyc Pour idea exploration"
         },
         {
           "id": "card-1779181173057-x9pm0",
-          "lane": "write",
           "title": "The New PM Job: Herding the Robot Into Building the Right Thing",
-          "details": "As AI agents generate more of the code, product work shifts toward intent, constraints, review, and quality control."
+          "details": "As AI agents generate more of the code, product work shifts toward intent, constraints, review, and quality control.",
+          "lane": "write"
         },
         {
           "id": "card-1779181228717-khnex",
-          "lane": "write",
           "title": "The Case for Algorithmic Creativity",
-          "details": "Argue that randomness, rules, MIDI patterns, and Canvas APIs can produce meaningful creative work without generative AI."
+          "details": "Argue that randomness, rules, MIDI patterns, and Canvas APIs can produce meaningful creative work without generative AI.",
+          "lane": "write"
         },
         {
           "id": "card-1779181278941-hzxbk",
-          "lane": "write",
           "title": "The Case for Useless-Sounding Apps",
-          "details": "A philosophy of making software that is not trying to become SaaS, raise money, or ruin your inbox."
+          "details": "A philosophy of making software that is not trying to become SaaS, raise money, or ruin your inbox.",
+          "lane": "write"
         },
         {
           "id": "card-1779181284518-64y9a",
-          "lane": "write",
           "title": "Is This AI-Built App Any Good?",
-          "details": "A PM-ish checklist for judging concept, usability, maintainability, accessibility, performance, security, and whether it feels horrible to use."
+          "details": "A PM-ish checklist for judging concept, usability, maintainability, accessibility, performance, security, and whether it feels horrible to use.",
+          "lane": "write"
         },
         {
           "id": "card-1779187671768-7f93s",
-          "lane": "write",
           "title": "Product Prioritisation Is Not as Objective as Everyone Pretends",
-          "details": "Feature ranking frameworks look like machines for producing truth, but they mostly produce structured opinions.  This article asks whether objective prioritisation is possible, what “objective enough” might look like, and whether companies actually want objectivity — or just a tidier way to justify difficult choices."
+          "details": "Feature ranking frameworks look like machines for producing truth, but they mostly produce structured opinions.  This article asks whether objective prioritisation is possible, what “objective enough” might look like, and whether companies actually want objectivity — or just a tidier way to justify difficult choices.",
+          "lane": "write"
         }
       ]
     },
@@ -112,21 +112,15 @@
       "title": "Doing",
       "cards": [
         {
-          "id": "card-5",
-          "text": "Polish project page layouts",
-          "title": "Polish project page layouts",
-          "details": ""
-        },
-        {
           "id": "card-1779055127746-h2z0c",
           "title": "Expecto",
           "details": "Neural network sandbox. Visual way to understand how NNs work. Do some fancy things with animation."
         },
         {
           "id": "card-1779181201254-zrib7",
-          "lane": "write",
           "title": "Turning Weird Little Ideas Into Buildable Apps",
-          "details": "My practical process for moving from vague concept to AI-readable PRD to deployable project."
+          "details": "My practical process for moving from vague concept to AI-readable PRD to deployable project.",
+          "lane": "write"
         }
       ]
     },
@@ -147,17 +141,24 @@
         },
         {
           "id": "card-7",
-          "text": "GitHub activity timeline",
-          "lane": "other",
           "title": "GitHub activity timeline",
-          "details": ""
+          "details": "",
+          "text": "GitHub activity timeline",
+          "lane": "other"
         },
         {
           "id": "card-8",
-          "text": "SVG sandwich favicon",
-          "lane": "other",
           "title": "SVG sandwich favicon",
-          "details": ""
+          "details": "",
+          "text": "SVG sandwich favicon",
+          "lane": "other"
+        },
+        {
+          "id": "card-5",
+          "title": "Polish project page layouts",
+          "details": "",
+          "text": "Polish project page layouts",
+          "lane": "build"
         }
       ]
     },
@@ -167,9 +168,9 @@
       "cards": [
         {
           "id": "card-6",
-          "text": "Command palette with cmdk",
           "title": "Command palette with cmdk",
-          "details": ""
+          "details": "",
+          "text": "Command palette with cmdk"
         }
       ]
     }

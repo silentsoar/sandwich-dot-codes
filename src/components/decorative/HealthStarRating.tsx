@@ -72,32 +72,34 @@ export function HealthStarRating({ commitCount, className }: HealthStarRatingPro
   return (
     <div
       className={cn(
-        "inline-flex items-center gap-2.5 rounded-md border-2 border-white/20 bg-[#1B5E50] px-3 py-2.5 shadow-lg",
+        "inline-flex flex-col gap-1.5 rounded-md border-2 border-white/20 bg-[#1B5E50] px-3 py-2.5 shadow-lg",
         className,
       )}
       title={`${count} commits this week`}
     >
-      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32" className="h-12 w-12 flex-shrink-0">
-        <path d="M2 17 C2 17 2 9 16 9 C30 9 30 17 30 17 Z" fill="#D6B347" stroke="#463F3A" strokeWidth="1.5" strokeLinejoin="round"/>
-        <path d="M2 18 C6 16 10 20 16 18 C22 16 26 20 30 18 L30 21 C26 23 22 19 16 21 C10 23 6 19 2 21 Z" fill="#9FB06F" stroke="#463F3A" strokeWidth="1.2"/>
-        <path d="M2 22 L30 22 L30 24 L2 24 Z" fill="#D98B73" stroke="#463F3A" strokeWidth="1.2"/>
-        <path d="M3 25 L29 25 L29 27 C29 28.5 27 29 26 29 L6 29 C5 29 3 28.5 3 27 Z" fill="#D6B347" stroke="#463F3A" strokeWidth="1.5" strokeLinejoin="round"/>
-      </svg>
-      <div className="flex flex-col items-center gap-1">
-        <span className="font-heading text-[12px] font-bold uppercase tracking-widest text-white">
-          Health Star Rating
-        </span>
-        <div className="flex gap-0.5">
-          {stars.map((fill, i) => (
-            <div key={i} className="h-[26px] w-[26px]">
-              <StarIcon fill={fill} />
-            </div>
-          ))}
+      <div className="flex items-center gap-2.5">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32" className="h-12 w-12 flex-shrink-0">
+          <path d="M2 17 C2 17 2 9 16 9 C30 9 30 17 30 17 Z" fill="#D6B347" stroke="#463F3A" strokeWidth="1.5" strokeLinejoin="round"/>
+          <path d="M2 18 C6 16 10 20 16 18 C22 16 26 20 30 18 L30 21 C26 23 22 19 16 21 C10 23 6 19 2 21 Z" fill="#9FB06F" stroke="#463F3A" strokeWidth="1.2"/>
+          <path d="M2 22 L30 22 L30 24 L2 24 Z" fill="#D98B73" stroke="#463F3A" strokeWidth="1.2"/>
+          <path d="M3 25 L29 25 L29 27 C29 28.5 27 29 26 29 L6 29 C5 29 3 28.5 3 27 Z" fill="#D6B347" stroke="#463F3A" strokeWidth="1.5" strokeLinejoin="round"/>
+        </svg>
+        <div className="flex flex-col items-start gap-1">
+          <span className="font-heading text-[12px] font-bold uppercase tracking-widest text-white">
+            Health Star Rating
+          </span>
+          <div className="flex gap-0.5">
+            {stars.map((fill, i) => (
+              <div key={i} className="h-[26px] w-[26px]">
+                <StarIcon fill={fill} />
+              </div>
+            ))}
+          </div>
         </div>
-        <span className="text-[13px] text-white/80">
-          {count} GitHub commit{count !== 1 ? "s" : ""} this week
-        </span>
       </div>
+      <span className="text-center text-[13px] text-white/80">
+        {count} GitHub commit{count !== 1 ? "s" : ""} this week
+      </span>
     </div>
   );
 }

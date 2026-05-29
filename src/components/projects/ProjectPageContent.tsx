@@ -123,8 +123,8 @@ export function ProjectPageContent({ project, resolvedShowcase }: ProjectPageCon
       <Section spacing="default">
         <Container size="narrow" className="max-w-[57.6rem]">
           <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
+            initial={{ opacity: 0, marginTop: 20 }}
+            animate={{ opacity: 1, marginTop: 0 }}
             transition={{ delay: 0.2, type: "spring", stiffness: 200, damping: 20 }}
           >
             <div className="border-3 border-border bg-background p-5 shadow-tactile paper-grain dark:bg-background-dark sm:p-8">

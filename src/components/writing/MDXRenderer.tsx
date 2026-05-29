@@ -130,9 +130,13 @@ const mdxComponents = {
       const img = imgRef.current;
       if (!img) return;
       const checkSize = () => {
-        const containerWidth = img.closest("article")?.clientWidth ?? 0;
+        const article = img.closest("article");
+        if (!article) return;
+        const containerWidth = article.clientWidth;
+        const padding = parseInt(getComputedStyle(article).paddingLeft) + parseInt(getComputedStyle(article).paddingRight);
+        const innerWidth = containerWidth - padding;
         const displayWidth = Math.min(img.naturalWidth, 600);
-        setIsSmall(displayWidth < containerWidth * 0.5);
+        setIsSmall(displayWidth < innerWidth * 0.8);
       };
       if (img.complete) {
         checkSize();
@@ -155,7 +159,7 @@ const mdxComponents = {
             ref={imgRef}
             src={src}
             alt={alt || ""}
-            className="block h-auto w-full"
+            className="block max-w-full h-auto"
             style={!isSmall ? { maxHeight: "600px", maxWidth: "600px" } : undefined}
             loading="lazy"
             {...props}

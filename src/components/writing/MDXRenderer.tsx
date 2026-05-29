@@ -145,14 +145,13 @@ const mdxComponents = {
           isSmall && "float-right ml-6 mb-4 max-w-[50%]"
         )}
       >
-        <div className="w-fit overflow-hidden border-3 border-border shadow-tactile">
+        <div className="w-fit max-w-[600px] overflow-hidden border-3 border-border shadow-tactile">
           {/* eslint-disable-next-line @next/next/no-img-element */}
           <img
             ref={imgRef}
             src={src}
             alt={alt || ""}
-            className="max-w-full h-auto"
-            style={{ maxWidth: "600px", maxHeight: "600px" }}
+            style={{ maxWidth: "600px", maxHeight: "600px", width: "100%", height: "auto" }}
             loading="lazy"
             {...props}
           />

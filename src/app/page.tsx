@@ -52,10 +52,16 @@ export default function HomePage() {
     .sort((a, b) => compareDesc(new Date(a.date), new Date(b.date)));
 
   const showcaseProjects = allProjects
-    .filter((p) => p.showcase && imageExists(p.showcase))
+    .map((p) => ({
+      title: p.title,
+      showcase: (p.showcase && imageExists(p.showcase) ? p.showcase : p.firstBodyImage) as string | undefined,
+      url: p.url,
+      date: p.date,
+    }))
+    .filter((p) => p.showcase)
     .sort((a, b) => compareDesc(new Date(a.date), new Date(b.date)))
     .slice(0, 3)
-    .map((p) => ({ title: p.title, showcase: p.showcase!, url: p.url }));
+    .map(({ title, showcase, url }) => ({ title, showcase: showcase!, url }));
 
   const recentArticles = allArticles
     .sort((a, b) => compareDesc(new Date(a.date), new Date(b.date)))

@@ -142,7 +142,7 @@ const mdxComponents = {
       <figure
         className={cn(
           "my-8 rotate-[-0.3deg]",
-          isSmall && "float-right ml-6 mb-4 max-w-[50%]"
+          isSmall && "float-right ml-6 mb-4 w-[50%]"
         )}
       >
         <div className={cn("w-fit overflow-hidden border-3 border-border shadow-tactile", !isSmall && "max-w-[600px]")}>

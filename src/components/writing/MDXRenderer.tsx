@@ -1,7 +1,7 @@
 import { getMDXComponent } from "mdx-bundler/client";
 import Link from "next/link";
 import { cn } from "@/lib/utils";
-import React from "react";
+import React, { useRef, useEffect, useState } from "react";
 
 const mdxComponents = {
   h1: ({ className, ...props }: React.HTMLAttributes<HTMLHeadingElement>) => (
@@ -123,14 +123,35 @@ const mdxComponents = {
   ),
   img: ({ src, alt, ...props }: React.ImgHTMLAttributes<HTMLImageElement>) => {
     if (!src) return null;
+    const imgRef = useRef<HTMLImageElement>(null);
+    const [isSmall, setIsSmall] = useState(false);
+
+    useEffect(() => {
+      const img = imgRef.current;
+      if (!img) return;
+      if (img.complete) {
+        setIsSmall(img.naturalWidth < img.parentElement!.parentElement!.clientWidth * 0.5);
+      } else {
+        img.onload = () => {
+          setIsSmall(img.naturalWidth < img.parentElement!.parentElement!.clientWidth * 0.5);
+        };
+      }
+    }, [src]);
+
     return (
-      <figure className="my-8 rotate-[-0.3deg]">
-        <div className="overflow-hidden border-3 border-border shadow-tactile">
+      <figure
+        className={cn(
+          "my-8 rotate-[-0.3deg]",
+          isSmall && "float-right ml-6 mb-4 max-w-[50%]"
+        )}
+      >
+        <div className="w-fit overflow-hidden border-3 border-border shadow-tactile">
           {/* eslint-disable-next-line @next/next/no-img-element */}
           <img
+            ref={imgRef}
             src={src}
             alt={alt || ""}
-            className="w-full"
+            className="max-w-full h-auto"
             loading="lazy"
             {...props}
           />

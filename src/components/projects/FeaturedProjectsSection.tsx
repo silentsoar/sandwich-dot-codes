@@ -12,6 +12,9 @@ interface FeaturedProjectsSectionProps {
 }
 
 export function FeaturedProjectsSection({ projects }: FeaturedProjectsSectionProps) {
+  const fullProjects = projects.slice(0, 2);
+  const compactProjects = projects.slice(2, 6);
+
   return (
     <Section className="relative overflow-hidden" spacing="default">
       <Container>
@@ -29,15 +32,28 @@ export function FeaturedProjectsSection({ projects }: FeaturedProjectsSectionPro
         </motion.div>
 
         <div className="grid grid-cols-1 gap-6 md:grid-cols-2">
-          {projects.map((project, i) => (
+          {fullProjects.map((project, i) => (
             <ProjectCard
               key={project.slug}
               project={project}
               index={i}
-              variant={i === 0 ? "featured" : "default"}
+              variant="featured"
             />
           ))}
         </div>
+
+        {compactProjects.length > 0 && (
+          <div className="mt-6 grid grid-cols-2 gap-4 md:grid-cols-4">
+            {compactProjects.map((project, i) => (
+              <ProjectCard
+                key={project.slug}
+                project={project}
+                index={i + 2}
+                variant="compact"
+              />
+            ))}
+          </div>
+        )}
       </Container>
 
       <div

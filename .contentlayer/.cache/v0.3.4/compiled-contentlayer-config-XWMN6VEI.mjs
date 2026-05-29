@@ -5,6 +5,21 @@ import rehypeSlug from "rehype-slug";
 import rehypeAutolinkHeadings from "rehype-autolink-headings";
 import rehypeHighlight from "rehype-highlight";
 import remarkGfm from "remark-gfm";
+var glsl = () => ({
+  name: "GLSL",
+  case_insensitive: false,
+  keywords: {
+    keyword: "attribute const uniform varying buffer shared coherent volatile restrict readonly writeonly atomic_uint layout centroid flat smooth noperspective patch sample break continue do for while switch case default if else subroutine in out inout float double int void bool true false invariant discard return mat2 mat3 mat4 vec2 vec3 vec4 ivec2 ivec3 ivec4 bvec2 bvec3 bvec4 sampler2D samplerCube struct",
+    built_in: "radians degrees sin cos tan asin acos atan pow exp log exp2 log2 sqrt inversesqrt abs sign floor trunc round ceil fract mod min max clamp mix step smoothstep length distance dot cross normalize faceforward reflect refract texture texture2D textureCube gl_Position gl_FragCoord gl_FragColor"
+  },
+  contains: [
+    { scope: "comment", begin: /\/\*/, end: /\*\// },
+    { scope: "comment", begin: /\/\//, end: /$/ },
+    { scope: "string", begin: /"/, end: /"/ },
+    { scope: "number", begin: /\b\d+(\.\d+)?/ },
+    { scope: "meta", begin: /#\s*[a-z]+\b/, end: /$/ }
+  ]
+});
 var Project = defineDocumentType(() => ({
   name: "Project",
   filePathPattern: "projects/**/*.mdx",
@@ -65,6 +80,18 @@ var Article = defineDocumentType(() => ({
     url: {
       type: "string",
       resolve: (doc) => `/writing/${doc._raw.sourceFileName.replace(/\.mdx$/, "")}`
+    },
+    firstBodyImage: {
+      type: "string",
+      resolve: (doc) => {
+        const mdMatch = doc.body.raw.match(/!\[.*?\]\(([^)]+)\)/);
+        if (mdMatch)
+          return mdMatch[1];
+        const imgMatch = doc.body.raw.match(/<img[^>]+src=["']([^"']+)["']/);
+        if (imgMatch)
+          return imgMatch[1];
+        return void 0;
+      }
     }
   }
 }));
@@ -103,7 +130,7 @@ var contentlayer_config_default = makeSource({
     rehypePlugins: [
       rehypeSlug,
       [rehypeAutolinkHeadings, { behavior: "wrap" }],
-      rehypeHighlight
+      [rehypeHighlight, { languages: { glsl } }]
     ]
   }
 });
@@ -113,4 +140,4 @@ export {
   Project,
   contentlayer_config_default as default
 };
-//# sourceMappingURL=compiled-contentlayer-config-HFYPQQMT.mjs.map
+//# sourceMappingURL=compiled-contentlayer-config-XWMN6VEI.mjs.map

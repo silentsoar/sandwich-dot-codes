@@ -3,10 +3,11 @@
 import projects__brickSpiderMdx from './projects__brick-spider.mdx.json' with { type: 'json' }
 import projects__expectoMdx from './projects__expecto.mdx.json' with { type: 'json' }
 import projects__jiwwMdx from './projects__jiww.mdx.json' with { type: 'json' }
+import projects__knutCounterMdx from './projects__knut-counter.mdx.json' with { type: 'json' }
 import projects__sandwichDotCodesMdx from './projects__sandwich-dot-codes.mdx.json' with { type: 'json' }
 import projects__smartthingspublicMdx from './projects__smartthingspublic.mdx.json' with { type: 'json' }
 import projects__soundOfWallMdx from './projects__sound-of-wall.mdx.json' with { type: 'json' }
 import projects__spearmintRhinoMdx from './projects__spearmint-rhino.mdx.json' with { type: 'json' }
 import projects__splinchedMdx from './projects__splinched.mdx.json' with { type: 'json' }
 
-export const allProjects = [projects__brickSpiderMdx, projects__expectoMdx, projects__jiwwMdx, projects__sandwichDotCodesMdx, projects__smartthingspublicMdx, projects__soundOfWallMdx, projects__spearmintRhinoMdx, projects__splinchedMdx]
+export const allProjects = [projects__brickSpiderMdx, projects__expectoMdx, projects__jiwwMdx, projects__knutCounterMdx, projects__sandwichDotCodesMdx, projects__smartthingspublicMdx, projects__soundOfWallMdx, projects__spearmintRhinoMdx, projects__splinchedMdx]

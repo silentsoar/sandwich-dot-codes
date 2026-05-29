@@ -80,6 +80,16 @@ var Article = defineDocumentType(() => ({
     url: {
       type: "string",
       resolve: (doc) => `/writing/${doc._raw.sourceFileName.replace(/\.mdx$/, "")}`
+    },
+    firstBodyImage: {
+      type: "string",
+      resolve: (doc) => {
+        const mdMatch = doc.body.raw.match(/!\[.*?\]\(([^)]+)\)/);
+        if (mdMatch) return mdMatch[1];
+        const imgMatch = doc.body.raw.match(/<img[^>]+src=["']([^"']+)["']/);
+        if (imgMatch) return imgMatch[1];
+        return void 0;
+      }
     }
   }
 }));
@@ -128,4 +138,4 @@ export {
   Project,
   contentlayer_config_default as default
 };
-//# sourceMappingURL=compiled-contentlayer-config-YURT2OD3.mjs.map
+//# sourceMappingURL=compiled-contentlayer-config-EIYO7JYD.mjs.map

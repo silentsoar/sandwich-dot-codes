@@ -15,6 +15,7 @@ import { cn } from "@/lib/utils";
 
 interface ProjectPageContentProps {
   project: Project;
+  resolvedShowcase?: string;
 }
 
 const statusColors: Record<string, "slime" | "mustard" | "muted"> = {
@@ -23,8 +24,8 @@ const statusColors: Record<string, "slime" | "mustard" | "muted"> = {
   archived: "muted",
 };
 
-export function ProjectPageContent({ project }: ProjectPageContentProps) {
-  const hasShowcase = !!project.showcase;
+export function ProjectPageContent({ project, resolvedShowcase }: ProjectPageContentProps) {
+  const hasShowcase = !!resolvedShowcase;
 
   return (
     <>
@@ -106,7 +107,7 @@ export function ProjectPageContent({ project }: ProjectPageContentProps) {
               {hasShowcase && (
                 <div className="hidden flex-shrink-0 md:block md:w-[260px] lg:w-[300px]">
                   <PhoneShowcase
-                    src={project.showcase!}
+                    src={resolvedShowcase!}
                     alt={`${project.title} on iPhone`}
                     cropped
                   />

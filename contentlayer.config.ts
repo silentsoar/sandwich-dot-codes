@@ -57,6 +57,16 @@ export const Project = defineDocumentType(() => ({
       type: "string",
       resolve: (doc) => `/projects/${doc._raw.sourceFileName.replace(/\.mdx$/, "")}`,
     },
+    firstBodyImage: {
+      type: "string",
+      resolve: (doc) => {
+        const mdMatch = doc.body.raw.match(/!\[.*?\]\(([^)]+)\)/);
+        if (mdMatch) return mdMatch[1];
+        const imgMatch = doc.body.raw.match(/<img[^>]+src=["']([^"']+)["']/);
+        if (imgMatch) return imgMatch[1];
+        return undefined;
+      },
+    },
   },
 }));
 
@@ -84,6 +94,16 @@ export const Article = defineDocumentType(() => ({
     url: {
       type: "string",
       resolve: (doc) => `/writing/${doc._raw.sourceFileName.replace(/\.mdx$/, "")}`,
+    },
+    firstBodyImage: {
+      type: "string",
+      resolve: (doc) => {
+        const mdMatch = doc.body.raw.match(/!\[.*?\]\(([^)]+)\)/);
+        if (mdMatch) return mdMatch[1];
+        const imgMatch = doc.body.raw.match(/<img[^>]+src=["']([^"']+)["']/);
+        if (imgMatch) return imgMatch[1];
+        return undefined;
+      },
     },
   },
 }));

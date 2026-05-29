@@ -18,7 +18,8 @@ interface ArticlePageContentProps {
 }
 
 export function ArticlePageContent({ article }: ArticlePageContentProps) {
-  const hasCover = !!article.cover;
+  const effectiveCover = article.cover || article.firstBodyImage;
+  const hasCover = !!effectiveCover;
 
   return (
     <>
@@ -96,7 +97,7 @@ export function ArticlePageContent({ article }: ArticlePageContentProps) {
                 <div className="hidden flex-shrink-0 md:block md:w-[260px] lg:w-[300px]">
                   <div className="border-3 border-border shadow-tactile rotate-[1deg] overflow-hidden">
                     <Image
-                      src={article.cover!}
+                      src={effectiveCover!}
                       alt={article.title}
                       width={600}
                       height={400}

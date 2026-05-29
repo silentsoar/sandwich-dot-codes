@@ -13,6 +13,9 @@ interface WritingPreviewSectionProps {
 }
 
 export function WritingPreviewSection({ articles }: WritingPreviewSectionProps) {
+  const fullArticles = articles.slice(0, 2);
+  const compactArticles = articles.slice(2, 6);
+
   return (
     <Section spacing="default">
       <Container>
@@ -38,10 +41,23 @@ export function WritingPreviewSection({ articles }: WritingPreviewSectionProps) 
         </motion.div>
 
         <div className="grid grid-cols-1 gap-6 md:grid-cols-2">
-          {articles.map((article, i) => (
+          {fullArticles.map((article, i) => (
             <ArticleCard key={article.slug} article={article} index={i} />
           ))}
         </div>
+
+        {compactArticles.length > 0 && (
+          <div className="mt-6 grid grid-cols-2 gap-4 md:grid-cols-4">
+            {compactArticles.map((article, i) => (
+              <ArticleCard
+                key={article.slug}
+                article={article}
+                index={i + 2}
+                variant="compact"
+              />
+            ))}
+          </div>
+        )}
 
         <Link
           href="/writing"

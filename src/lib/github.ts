@@ -240,6 +240,49 @@ export async function fetchGitHubTimeline(): Promise<TimelineEvent[]> {
   }
 }
 
+export async function fetchWeeklyCommitCount(): Promise<number> {
+  try {
+    const oneWeekAgo = new Date();
+    oneWeekAgo.setDate(oneWeekAgo.getDate() - 7);
+    const since = oneWeekAgo.toISOString();
+
+    const reposRes = await fetch(
+      `https://api.github.com/users/${GITHUB_USERNAME}/repos?per_page=100&sort=pushed&type=all`,
+      {
+        headers: githubHeaders,
+        next: { revalidate: 3600 },
+      },
+    );
+
+    if (!reposRes.ok) return 0;
+    const repos: { name: string; fork: boolean; pushed_at: string }[] = await reposRes.json();
+
+    const recentlyPushed = repos.filter(
+      (r) => !r.fork && new Date(r.pushed_at) >= oneWeekAgo,
+    );
+
+    const counts = await Promise.allSettled(
+      recentlyPushed.map((repo) =>
+        fetch(
+          `https://api.github.com/repos/${GITHUB_USERNAME}/${repo.name}/commits?since=${since}&per_page=100`,
+          { headers: githubHeaders, next: { revalidate: 3600 } },
+        ).then((res) => (res.ok ? res.json() : [])),
+      ),
+    );
+
+    let total = 0;
+    for (const result of counts) {
+      if (result.status === "fulfilled" && Array.isArray(result.value)) {
+        total += result.value.length;
+      }
+    }
+
+    return total;
+  } catch {
+    return 0;
+  }
+}
+
 export async function fetchGitHubLanguages(): Promise<LanguageStat[]> {
   try {
     const reposRes = await fetch(

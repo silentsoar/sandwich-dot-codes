@@ -1,5 +1,6 @@
 "use client";
 
+import { useState } from "react";
 import Link from "next/link";
 import Image from "next/image";
 import { motion } from "framer-motion";
@@ -12,7 +13,7 @@ import { cn } from "@/lib/utils";
 interface ProjectCardProps {
   project: Project;
   index?: number;
-  variant?: "default" | "featured";
+  variant?: "default" | "featured" | "compact";
 }
 
 const statusColors: Record<string, "slime" | "mustard" | "muted"> = {
@@ -23,7 +24,9 @@ const statusColors: Record<string, "slime" | "mustard" | "muted"> = {
 
 export function ProjectCard({ project, index = 0, variant = "default" }: ProjectCardProps) {
   const rotation = index % 2 === 0 ? -0.6 : 0.5;
-  const cardImage = project.showcase || project.cover;
+  const fallbackImage = project.cover;
+  const [imgSrc, setImgSrc] = useState(project.showcase || project.cover);
+  const isCompact = variant === "compact";
 
   return (
     <motion.div
@@ -44,74 +47,87 @@ export function ProjectCard({ project, index = 0, variant = "default" }: Project
             "transition-all duration-300",
             "hover:shadow-tactile-lg hover:scale-[1.02] hover:rotate-0",
             "paper-grain",
-            variant === "featured" ? "min-h-[320px]" : "min-h-[260px]",
+            variant === "featured" ? "min-h-[320px]" : isCompact ? "min-h-[130px]" : "min-h-[260px]",
           )}
           style={{ transform: `rotate(${rotation}deg)` }}
         >
-          {cardImage && (
-            <div className="relative h-48 overflow-hidden border-b-3 border-border">
+          {imgSrc && (
+            <div className={cn("relative overflow-hidden border-b-3 border-border", isCompact ? "h-24" : "h-48")}>
               <Image
-                src={cardImage}
+                src={imgSrc}
                 alt={project.title}
                 fill
                 className="object-cover transition-transform duration-500 group-hover:scale-105"
+                onError={() => {
+                  if (fallbackImage && imgSrc !== fallbackImage) {
+                    setImgSrc(fallbackImage);
+                  }
+                }}
               />
               <div className="absolute inset-0 bg-gradient-to-t from-background/60 to-transparent dark:from-background-dark/60" />
             </div>
           )}
 
-          <div className="p-5">
-            <div className="mb-3 flex items-center gap-2">
-              <StickerTag
-                variant={statusColors[project.status]}
-                rotation={index % 2 === 0 ? -3 : 2}
-              >
-                {project.status}
-              </StickerTag>
-              <DoodleAccent
-                variant={index % 3 === 0 ? "star" : index % 3 === 1 ? "circle" : "squiggle"}
-                size={14}
-              />
-            </div>
+          <div className={cn(isCompact ? "p-3" : "p-5")}>
+            {!isCompact && (
+              <div className="mb-3 flex items-center gap-2">
+                <StickerTag
+                  variant={statusColors[project.status]}
+                  rotation={index % 2 === 0 ? -3 : 2}
+                >
+                  {project.status}
+                </StickerTag>
+                <DoodleAccent
+                  variant={index % 3 === 0 ? "star" : index % 3 === 1 ? "circle" : "squiggle"}
+                  size={14}
+                />
+              </div>
+            )}
 
-            <h3 className="font-heading text-xl font-black transition-colors group-hover:text-mustard">
+            <h3 className={cn("font-heading font-black transition-colors group-hover:text-mustard", isCompact ? "text-sm" : "text-xl")}>
               {project.title}
             </h3>
 
-            <p className="mt-2 line-clamp-2 text-sm text-muted">
-              {project.description}
-            </p>
+            {!isCompact && (
+              <p className="mt-2 line-clamp-2 text-sm text-muted">
+                {project.description}
+              </p>
+            )}
 
-            <div className="mt-4 flex flex-wrap gap-1.5">
-              {project.tech.slice(0, 4).map((t) => (
-                <span
-                  key={t}
-                  className="border-2 border-border px-2 py-0.5 font-heading text-xs font-bold uppercase tracking-wider"
-                >
-                  {t}
-                </span>
-              ))}
-              {project.tech.length > 4 && (
-                <span className="px-2 py-0.5 font-heading text-xs font-bold text-muted">
-                  +{project.tech.length - 4}
-                </span>
-              )}
-            </div>
+            {!isCompact && (
+              <div className="mt-4 flex flex-wrap gap-1.5">
+                {project.tech.slice(0, 4).map((t) => (
+                  <span
+                    key={t}
+                    className="border-2 border-border px-2 py-0.5 font-heading text-xs font-bold uppercase tracking-wider"
+                  >
+                    {t}
+                  </span>
+                ))}
+                {project.tech.length > 4 && (
+                  <span className="px-2 py-0.5 font-heading text-xs font-bold text-muted">
+                    +{project.tech.length - 4}
+                  </span>
+                )}
+              </div>
+            )}
 
-            <div className="mt-4 flex items-center gap-3">
-              {project.github && (
-                <span className="flex items-center gap-1 text-xs text-muted transition-colors hover:text-foreground">
-                  <Github size={14} />
-                  <span>Code</span>
-                </span>
-              )}
-              {project.demo && (
-                <span className="flex items-center gap-1 text-xs text-muted transition-colors hover:text-foreground">
-                  <ExternalLink size={14} />
-                  <span>Demo</span>
-                </span>
-              )}
-            </div>
+            {!isCompact && (
+              <div className="mt-4 flex items-center gap-3">
+                {project.github && (
+                  <span className="flex items-center gap-1 text-xs text-muted transition-colors hover:text-foreground">
+                    <Github size={14} />
+                    <span>Code</span>
+                  </span>
+                )}
+                {project.demo && (
+                  <span className="flex items-center gap-1 text-xs text-muted transition-colors hover:text-foreground">
+                    <ExternalLink size={14} />
+                    <span>Demo</span>
+                  </span>
+                )}
+              </div>
+            )}
           </div>
         </div>
       </Link>

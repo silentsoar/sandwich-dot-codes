@@ -7,7 +7,7 @@ featured: true
 github: "https://github.com/silentsoar/knut-counter"
 demo: "https://knut-counter-k-srq7.vercel.app"
 status: "active"
-cover: "/images/projects/knut-counter.png"
+cover: "/images/projects/knutcounter_dashboard.png"
 showcase: "/images/projects/knut-counter-phone.png"
 tech: ["TypeScript", "React Native", "Expo", "Supabase", "Drizzle ORM", "Vercel", "Zustand", "Tailwind CSS"]
 ---
@@ -19,6 +19,8 @@ Knut Counter is a full-stack AI usage cost tracking and optimization tool. It ag
 Beyond tracking, Knut Counter is an optimization tool. Its recommendation engine suggests the best model for a given task by weighing cost against quality using dual benchmark sources. A quality-vs-cost slider lets users tune recommendations to their budget, returning the cheapest viable option, the highest quality option, or the best balance between the two.
 
 The name comes from the wizarding world's smallest unit of currency — a reminder that every token has a cost, and small optimizations add up.
+
+![Knut Counter dashboard showing aggregated spend, token usage breakdowns, and per-provider sparkline charts](/images/projects/knutcounter_dashboard.png)
 
 ## The Problem It Solves
 
@@ -43,6 +45,8 @@ The dashboard also surfaces alerts: budget thresholds at 50%, 75%, 90%, and 100%
 
 ### Model Recommendations
 
+![Model comparison view showing cost-to-quality analysis across providers](/images/projects/knutcounter_compare.png)
+
 The recommendation engine is the core differentiator. Given a task type (e.g., "code generation," "summarization," "general chat"), it returns three picks:
 
 | Pick | Strategy |
@@ -61,6 +65,8 @@ Scores are computed using benchmark data from two sources:
 | **BenchLM** | Leaderboard rankings across standardized tasks |
 
 ### Models Table
+
+![Models table ranking top models by usage with cost, benchmark, and speed columns](/images/projects/knutcounter_models.png)
 
 A ranked table of the top 100 models by weekly usage, with columns for:
 

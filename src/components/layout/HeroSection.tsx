@@ -7,6 +7,7 @@ import { Section } from "@/components/layout/Section";
 import { StickerTag } from "@/components/decorative/StickerTag";
 import { DoodleAccent } from "@/components/decorative/DoodleAccent";
 import { ScribbleArrow } from "@/components/decorative/ScribbleArrow";
+import { HealthStarRating } from "@/components/decorative/HealthStarRating";
 import { cn } from "@/lib/utils";
 
 interface ShowcaseItem {
@@ -165,7 +166,7 @@ export function HeroSection({ showcases = [], tags = [] }: HeroSectionProps) {
           {hasShowcases && (
             <motion.div
               initial={{ opacity: 0, x: 40 }}
-              animate={{ opacity: 1, x: 0 }}
+              animate={{ opacity: 1, x: -30 }}
               transition={{ delay: 0.4, type: "spring", stiffness: 150, damping: 20 }}
               className="hidden flex-shrink-0 md:block md:w-[260px] lg:w-[340px]"
             >
@@ -185,6 +186,9 @@ export function HeroSection({ showcases = [], tags = [] }: HeroSectionProps) {
                     </Link>
                   );
                 })}
+                <div className="absolute bottom-0 left-0 z-10">
+                  <HealthStarRating />
+                </div>
               </div>
             </motion.div>
           )}

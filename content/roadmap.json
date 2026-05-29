@@ -5,12 +5,6 @@
       "title": "Idea",
       "cards": [
         {
-          "id": "card-1779054866544-7ss6e",
-          "title": "We Will Rebuild",
-          "details": "Enter a LEGO set number and get alternative build ideas using only pieces from that set.",
-          "lane": "build"
-        },
-        {
           "id": "card-1779054945044-8uwzs",
           "title": "Doctor Beat",
           "details": "Upload or describe your song structure and get feedback on intro length, drops, transitions, variation, and listener momentum."
@@ -171,6 +165,12 @@
           "title": "Command palette with cmdk",
           "details": "",
           "text": "Command palette with cmdk"
+        },
+        {
+          "id": "card-1779054866544-7ss6e",
+          "title": "We Will Rebuild",
+          "details": "Enter a LEGO set number and get alternative build ideas using only pieces from that set.",
+          "lane": "build"
         }
       ]
     }

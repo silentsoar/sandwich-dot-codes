@@ -75,6 +75,12 @@
           "text": "Acrilyc Pour idea exploration"
         },
         {
+          "id": "card-1780109885240-2l077",
+          "title": "Locking AI out",
+          "details": "The move toward websites and databases preventing AI from accessing",
+          "lane": "write"
+        },
+        {
           "id": "card-1779181228717-khnex",
           "title": "The Case for Algorithmic Creativity",
           "details": "Argue that randomness, rules, MIDI patterns, and Canvas APIs can produce meaningful creative work without generative AI.",
@@ -84,12 +90,6 @@
           "id": "card-1779181278941-hzxbk",
           "title": "The Case for Useless-Sounding Apps",
           "details": "A philosophy of making software that is not trying to become SaaS, raise money, or ruin your inbox.",
-          "lane": "write"
-        },
-        {
-          "id": "card-1780109885240-2l077",
-          "title": "Locking AI out",
-          "details": "The move toward websites and databases preventing AI from accessing",
           "lane": "write"
         },
         {
